@@ -1,8 +1,9 @@
 <template>
-  <b-container>
-    <header>
-      <h1>🌱</h1>
-      <h1>회원가입</h1>
+  <b-container class="register">
+
+    <header class="register-header">
+      <h1 class="register-logo">🌱</h1>
+      <h1 class="register-title">회원가입</h1>
     </header>
 
     <form id="register-form">
@@ -40,5 +41,26 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.register {
+  max-width: 600px;
+}
+
+header {
+  text-align: center;
+  padding: 3rem 0rem;
+}
+
+input {
+  padding: 0.75rem 1.5rem;
+  margin-bottom: 20px;
+  border-radius: 30px;
+}
+
+.register-form-btn {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 10px 0px;
+  border-radius: 30px;
+}
 
 </style>
