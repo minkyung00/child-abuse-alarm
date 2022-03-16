@@ -1,7 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import HomeView from "@/views/HomeView.vue";
 import Register from "@/views/Register.vue"
+
+import ApplyCenter from "@/views/ApplyCenter.vue"
 
 Vue.use(VueRouter);
 
@@ -15,6 +18,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/apply-center",
+    name: "ApplyCenter",
+    component: ApplyCenter
   }
 ];
 
