@@ -56,6 +56,13 @@ export default {
       padding: 0.75rem 1.5rem;
       margin-bottom: 20px;
       border-radius: 30px;
+
+      &:focus {
+        border-color: $primary-color;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem #33d27b52;
+        color: $primary-color;
+      }
     }
 
     .register-form-btn {

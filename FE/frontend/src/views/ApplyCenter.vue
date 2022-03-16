@@ -5,15 +5,24 @@
       <h1 class="apply-title">어린이집 등록</h1>
       <p class="apply-desc">최초 등록된 어린이집으로만 이용 가능합니다.</p>
     </header>
-    
-    <b-form-input type="text"
-                  placeholder="어린이집명을 입력해주세요." />
+
+    <div class="search-bar">
+      <b-icon class="search-icon" icon="search" scale="2"></b-icon>
+      <b-form-input type="search"
+                    placeholder="어린이집명을 입력해주세요." />
+    </div>
+    <CenterList></CenterList>
   </b-container>
 </template>
 
 <script>
+import CenterList from '@/components/CenterList.vue'
+
 export default {
-  name: "ApplyCenter"
+  name: "ApplyCenter",
+  components: {
+    CenterList,
+  },
 }
 </script>
 
@@ -32,16 +41,38 @@ export default {
   }
 }
 
+.search-bar {
+  position: relative;
+  text-align: center;
+
+  .search-icon {
+    position: absolute;
+    left: 25px;
+    top: 20px;
+    margin: 0;
+    color: white;
+  }
+}
+
 input {
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 4rem;
   margin-bottom: 20px;
   border-radius: 30px;
   border: 2.5px solid $primary-color;
+  background-color: $primary-color;
+  font-weight: bold;
+  font-size: 22px;
+
+  &::placeholder {
+    color: white;
+    font-weight: bold;
+  }
 
   &:focus {
     border-color: $primary-color;
     outline: 0;
     box-shadow: 0 0 0 0.25rem #33d27b52;
+    color: $primary-color;
   }
 }
 
