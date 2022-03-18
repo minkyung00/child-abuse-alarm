@@ -6,6 +6,8 @@ import Register from "@/views/Register.vue"
 
 import ApplyCenter from "@/views/ApplyCenter.vue"
 
+import UserHome from "@/views/UserHome.vue"
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -23,6 +25,11 @@ const routes = [
     path: "/apply-center",
     name: "ApplyCenter",
     component: ApplyCenter
+  },
+  {
+    path: "/user-home",
+    name: "UserHome",
+    component: UserHome
   }
 ];
 
