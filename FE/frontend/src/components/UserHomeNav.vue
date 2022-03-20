@@ -1,7 +1,7 @@
 <template>
   <b-nav vertical pills>
     <h1 class="userhome-logo">🌱</h1>
-    <b-nav-item active>
+    <b-nav-item active @click="handleRoute('DashBoard')">
       <b-icon icon="display"></b-icon>
       <span class="nav-link-text">대시보드</span>
     </b-nav-item>
@@ -22,7 +22,14 @@
 
 <script>
 export default {
-  name: "UserHomeNav"
+  name: "UserHomeNav",
+  methods: {
+    handleRoute (route) {
+      this.$router.push({
+        name: route
+      })
+    }
+  }
 }
 </script>
 
