@@ -11,12 +11,14 @@
 
     <b-col class="wrap-form">
       <div class="login">
-        <form id="login-form">
+        <form id="login-form" @submit.prevent="submitForm">
           <b-form-input id="login-id-input"
+                        v-model="userid"
                         type="text"
                         placeholder="아이디"
                         required/>
           <b-form-input id="login-password-input"
+                        v-model="password"
                         type="password"
                         placeholder="비밀번호"
                         required/>
@@ -40,6 +42,30 @@
 <script>
 export default {
   name: "HomeView",
+  data () {
+    return {
+      userid: '',
+      password: ''
+    }
+  },
+  methods: {
+    async submitForm () {
+      try {
+        const data = {
+          username: this.userid,
+          password: this.password
+        }
+
+        await this.$store.dispatch('Login', data)
+
+        this.$router.push({
+          name: 'UserHome'
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
 };
 </script>
 

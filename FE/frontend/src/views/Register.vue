@@ -6,27 +6,32 @@
       <h1 class="register-title">회원가입</h1>
     </header>
 
-    <form id="register-form">
+    <form id="register-form" @submit.prevent="submitForm">
       <b-form-input id="register-id-input"
-                  type="text"
-                  placeholder="아이디"
-                  required/>
+                    v-model="userid"
+                    type="text"
+                    placeholder="아이디"
+                    required/>
       <b-form-input id="register-name-input"
-                  type="text"
-                  placeholder="이름"
-                  required/>
+                    v-model="username"
+                    type="text"
+                    placeholder="이름"
+                    required/>
       <b-form-input id="register-email-input"
-                  type="email"
-                  placeholder="이메일"
-                  required/>
+                    v-model="email"
+                    type="email"
+                    placeholder="이메일"
+                    required/>
       <b-form-input id="register-password-input"
-                  type="password"
-                  placeholder="비밀번호"
-                  required/>
+                    v-model="password"
+                    type="password"
+                    placeholder="비밀번호"
+                    required/>
       <b-form-input id="register-password-again-input"
-                  type="password"
-                  placeholder="비밀번호 확인"
-                  required/>
+                    v-model="passwordAgain"
+                    type="password"
+                    placeholder="비밀번호 확인"
+                    required/>
       <button class="register-form-btn"
               type="submit"
       >가입하기</button>
@@ -35,8 +40,41 @@
 </template>
 
 <script>
+import { registerUser } from '@/api/auth';
+
 export default {
   name: "Register",
+  data () {
+    return {
+      userid: '',
+      username: '',
+      email: '',
+      password: '',
+      passwordAgain: ''
+    }
+  },
+  methods: {
+    async submitForm () {
+      try {
+        const data = {
+          username: this.userid,
+          name: this.username,
+          email: this.email,
+          password: this.password,
+          password2: this.passwordAgain
+        }
+
+        await registerUser(data)
+
+        alert('회원가입이 완료되었습니다!')
+        this.$router.push({
+          name: 'HomeView'
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
 }
 </script>
 
