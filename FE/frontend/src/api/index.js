@@ -3,23 +3,19 @@ import { setInterceptors } from './common/interceptors';
 
 function createAxiosService () {
   return axios.create({
-    proxy: {
-      target: process.env.VUE_APP_API_URL,
-      changeOrigin: true
-    }
+    baseURL: process.env.VUE_APP_API_URL
   });
 }
 
-function createAxiosServiceWithAuth(url) {
-    const axiosService = axios.create({
-      proxy: {
-        target: `${process.env.VUE_APP_API_URL}/api/${url}/`,
-        changeOrigin: true
-      }
-    });
-    
+function createAxiosServiceWithAuth() {
+  const axiosService = axios.create({
+    proxy: {
+      baseURL: process.env.VUE_APP_API_URL
+    }
+  });
+
   return setInterceptors(axiosService);
 }
 
 export const axiosService = createAxiosService();
-export const users = createAxiosServiceWithAuth('users');
+export const instance = createAxiosServiceWithAuth();

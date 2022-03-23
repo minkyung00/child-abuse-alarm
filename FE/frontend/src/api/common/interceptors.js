@@ -4,6 +4,7 @@ import axios from 'axios'
 export function setInterceptors (instance) {
   instance.interceptors.request.use(function (config) {
     config.headers['Content-Type'] = 'application/json'
+    config.headers['Access-Control-Allow-Origin'] = '*'
     config.headers.Authorization = store.state.accessToken ? `Bearer ${store.state.accessToken}` : store.state.accessToken
     config.headers.get['Cache-Control'] = 'no-cache'
     return config

@@ -1,11 +1,11 @@
-import { users } from './index'
+import { instance } from './index'
 
 function logoutUser (data) {
-  return users.post('logout/', data)
+  return instance.post('/api/users/logout/', data)
 }
 
 function refreshAccessToken (data) {
-  return users.post('login/refresh/', data)
+  return instance.post('/api/users/login/refresh/', data)
 }
 
 export {
