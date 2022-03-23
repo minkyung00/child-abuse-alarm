@@ -6,9 +6,9 @@ from account.models import User
 class Center(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=300)
-    code = models.CharField(max_length=12, unique=True)
+    code = models.CharField(max_length=12)
     homepage = models.CharField(max_length=150)
-    telephone = models.CharField(max_length=16, unique=True)
+    telephone = models.CharField(max_length=16)
 
     class Meta:
         db_table = "center"

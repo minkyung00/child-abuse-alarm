@@ -7,6 +7,11 @@ class CenterSerializer(serializers.ModelSerializer):
         model = Center
         fields = ['id', 'name', 'address', 'homepage', 'telephone']
 
+class CenterAllSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Center
+        fields = ['id', 'name', 'address', 'code', 'homepage', 'telephone']
+
 class CenterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CenterUser
