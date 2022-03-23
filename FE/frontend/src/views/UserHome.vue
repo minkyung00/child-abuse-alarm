@@ -17,5 +17,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.col-9 {
+  @media (max-width: 920px) {
+    width: 100%;
+  }
+}
 </style>

@@ -21,8 +21,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
 .card {
-  background-color: rgba(255, 0, 0, 0.253);
+  background-color: rgba(255, 0, 0, 25%);
+  position: relative;
+  animation: fadeInUp 0.8s ease-in-out;
 
   .card-body {
     padding: 1.5rem;
