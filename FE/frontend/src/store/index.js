@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import { loginUser } from '@/api/auth';
-import { refreshAccessToken } from '@/api/users';
+import { refreshAccessToken, logoutUser } from '@/api/users';
 
 import {
   getAccessFromCookie,
@@ -59,6 +59,22 @@ export default new Vuex.Store({
         saveUserToCookie(data.username)
       } catch (error) {
         return error.response.status
+      }
+    },
+    async Logout ({ state, commit }) {
+      try {
+        await logoutUser({
+          refresh: state.refreshToken
+        })
+        commit('clearUserid')
+        commit('clearToken')
+        commit('clearUserInfo')
+
+        deleteCookie('til_user')
+        deleteCookie('til_access')
+        deleteCookie('til_refresh')
+      } catch (err) {
+        console.log('Logout error: ', err)
       }
     },
     async refreshAccessToken ({ commit }) {
