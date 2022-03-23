@@ -1,26 +1,20 @@
 <template>
   <b-container>
-    <b-card title="꿈동산 어린이집">
+    <b-card v-for="center in centers"
+            :key="center"
+            :title="center.name">
       <b-card-text>
-        서울특별시 강동구 상암로63길 39
+        {{ center.address }}
       </b-card-text>
-      <button @click="showModal = true">등록
+      <button @click="handleClickButton(center.id)">등록
         <b-icon icon="arrow-right"></b-icon>
       </button>
     </b-card>
-
-    <b-card title="동산 어린이집">
-      <b-card-text>
-        서울특별시 강동구 상암로63길 39
-      </b-card-text>
-      <button @click="showModal = true">등록
-        <b-icon icon="arrow-right"></b-icon>
-      </button>
-    </b-card>
-
+  
     <CenterCodeModal
       v-if="showModal"
       @close="showModal = false"
+      :centerID="selectedID"
     />
   </b-container>
 </template>
@@ -33,9 +27,17 @@ export default {
   components: {
     CenterCodeModal,
   },
+  props: ['centers'],
   data () {
     return {
       showModal: false,
+      selectedID: ''
+    }
+  },
+  methods: {
+    handleClickButton (id) {
+      this.showModal = true
+      this.selectedID = id
     }
   }
 }

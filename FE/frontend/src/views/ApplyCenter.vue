@@ -8,14 +8,16 @@
 
     <div class="search-bar">
       <b-icon class="search-icon" icon="search" scale="2"></b-icon>
-      <b-form-input type="search"
+      <b-form-input v-model="keyword"
+                    type="search"
                     placeholder="어린이집명을 입력해주세요." />
     </div>
-    <CenterList></CenterList>
+    <CenterList :centers="centerList" />
   </b-container>
 </template>
 
 <script>
+import { getCenterList } from '@/api/center'
 import CenterList from '@/components/CenterList.vue'
 
 export default {
@@ -23,6 +25,27 @@ export default {
   components: {
     CenterList,
   },
+  data () {
+    return {
+      centerList: '',
+      keyword: ''
+    }
+  },
+  methods: {
+    async getCenterList () {
+      try {
+        const res = await getCenterList(this.keyword)
+        this.centerList = res.data
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  watch: {
+    keyword () {
+      this.getCenterList()
+    }
+  }
 }
 </script>
 
@@ -61,7 +84,7 @@ input {
   border: 2.5px solid $primary-color;
   background-color: $primary-color;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 20px;
 
   &::placeholder {
     color: white;

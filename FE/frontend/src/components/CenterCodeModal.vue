@@ -14,7 +14,9 @@
           </div>
 
           <div class="modal-body">
-            <b-form-input type="text" placeholder="코드를 입력하세요"/>
+            <b-form-input v-model="code"
+                          type="text"
+                          placeholder="코드를 입력하세요"/>
           </div>
 
           <div class="modal-footer">
@@ -29,8 +31,36 @@
 </template>
 
 <script>
+import { applyCenterCode } from "@/api/center.js"
 export default {
   name: "CenterCodeModal",
+  props: {
+    centerID: Number
+  },
+  data () {
+    return {
+      code: ''
+    }
+  },
+  methods: {
+    async submitForm () {
+      try {
+        const data = {
+          username: this.$store.state.userid,
+          code: this.code
+        }
+        const res = await applyCenterCode(this.centerID, data)
+
+        alert(`${res.center_name}이 등록되었습니다!`)
+        this.$router.push({
+          name: 'UserHome'
+        })
+      } catch (err) {
+        alert(err.response.data.error)
+        this.$router.go(this.$router.currentRoute)
+      }
+    }
+  }
 }
 </script>
 
