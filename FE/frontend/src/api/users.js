@@ -8,7 +8,12 @@ function refreshAccessToken (data) {
   return instance.post('/api/users/login/refresh/', data)
 }
 
+function getUserInfo (username) {
+  return instance.get(`/api/users/${username}/`)
+}
+
 export {
   logoutUser,
-  refreshAccessToken
+  refreshAccessToken,
+  getUserInfo
 };

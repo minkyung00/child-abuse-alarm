@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>꿈동산 어린이집</h3>
+    <h3>{{ centerName }}</h3>
     <b-row>
       <b-col>
         <b-card>
@@ -31,6 +31,7 @@ export default {
   },
   data () {
     return {
+      centerName: this.$store.state.center,
       alarmList: [
         {
           title: "때리기 발생",

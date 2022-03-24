@@ -9,6 +9,10 @@ function saveRefreshToCookie (value) {
 function saveUserToCookie (value) {
   document.cookie = `til_user=${value}; path=/`
 }
+
+function saveCenterToCookie (value) {
+  document.cookie = `til_center=${value}; path=/`
+}
   
 function getAccessFromCookie () {
   return document.cookie.replace(
@@ -30,6 +34,13 @@ function getUserFromCookie () {
     '$1'
   )
 }
+
+function getCenterFormCookie () {
+  return document.cookie.replace(
+    /(?:(?:^|.*;\s*)til_center\s*=\s*([^;]*).*$)|^.*$/,
+    '$1'
+  )
+}
   
 function deleteCookie (value) {
   document.cookie = `${value}=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;`
@@ -39,9 +50,11 @@ export {
   saveAccessToCookie,
   saveRefreshToCookie,
   saveUserToCookie,
+  saveCenterToCookie,
   getAccessFromCookie,
   getRefreshFromCookie,
   getUserFromCookie,
+  getCenterFormCookie,
   deleteCookie
 }
   

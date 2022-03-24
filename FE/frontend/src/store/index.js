@@ -2,15 +2,17 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import { loginUser } from '@/api/auth';
-import { refreshAccessToken, logoutUser } from '@/api/users';
+import { getUserInfo, refreshAccessToken, logoutUser } from '@/api/users';
 
 import {
   getAccessFromCookie,
   getRefreshFromCookie,
   getUserFromCookie,
+  getCenterFormCookie,
   saveAccessToCookie,
   saveRefreshToCookie,
   saveUserToCookie,
+  saveCenterToCookie,
   deleteCookie
 } from '@/utils/cookies'
 
@@ -20,7 +22,8 @@ export default new Vuex.Store({
   state: {
     userid: getUserFromCookie() || '',
     accessToken: getAccessFromCookie() || '',
-    refreshToken: getRefreshFromCookie() || ''
+    refreshToken: getRefreshFromCookie() || '',
+    center: getCenterFormCookie() || ''
   },
   getters: {
     isLogin (state) {
@@ -43,6 +46,12 @@ export default new Vuex.Store({
     clearToken (state) {
       state.accessToken = ''
       state.refreshToken = ''
+    },
+    setCenter (state, center) {
+      state.center = center
+    },
+    clearCenter (state) {
+      state.center = ''
     }
   },
   actions: {
@@ -57,8 +66,21 @@ export default new Vuex.Store({
         saveAccessToCookie(res.data.access)
         saveRefreshToCookie(res.data.refresh)
         saveUserToCookie(data.username)
+
+        dispatch('getUserInfo')
       } catch (error) {
         return error.response.status
+      }
+    },
+    async getUserInfo ({ commit }) {
+      try {
+        const res = await getUserInfo(this.state.userid)
+        const center = res.data.center
+
+        commit('setCenter', center)
+        saveCenterToCookie(center)
+      } catch (err) {
+        console.log('getUserInfo error: ', err)
       }
     },
     async Logout ({ state, commit }) {
@@ -69,10 +91,12 @@ export default new Vuex.Store({
         commit('clearUserid')
         commit('clearToken')
         commit('clearUserInfo')
+        commit('clearCenter')
 
         deleteCookie('til_user')
         deleteCookie('til_access')
         deleteCookie('til_refresh')
+        deleteCookie('til_center')
       } catch (err) {
         console.log('Logout error: ', err)
       }
