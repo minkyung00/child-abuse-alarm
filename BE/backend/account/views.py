@@ -4,11 +4,15 @@ from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.generics import get_object_or_404
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from .serializers import UserRegisterSerializer
+from utils import permission
+
+from .models import User
+from .serializers import UserRegisterSerializer, UserInfoSerializer
 
 
 class UserRegisterView(APIView):
@@ -40,3 +44,19 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class UserInfoView(APIView):
+    permission_classes = [permission.IsRightUser]
+
+    def get_object(self, username):
+        user = get_object_or_404(User, username=username)
+        return user
+
+    def get(self, request, username, format=None):
+        user = self.get_object(username)
+        
+        if request.user.username != user.username:
+            return Response({"error": "접근 권한이 없습니다"}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = UserInfoSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -6,7 +6,6 @@ class UserSerializer (serializers.ModelSerializer):
         model = User
         fields = "__all__"
 
-# 회원가입
 class UserRegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style = {"input_type": "password"}, write_only = True)
 
@@ -35,4 +34,4 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email','username','name','privilege', 'date_joined', 'is_active']
+        fields = ['id', 'email','username','name','center','privilege', 'date_joined', 'is_active']
