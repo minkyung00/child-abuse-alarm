@@ -51,7 +51,7 @@ export default {
         }
         const res = await applyCenterCode(this.centerID, data)
 
-        alert(`${res.center_name}이 등록되었습니다!`)
+        alert(`${res.data.center_name}이 등록되었습니다!`)
         this.$router.push({
           name: 'UserHome'
         })

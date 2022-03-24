@@ -2,13 +2,17 @@
   <b-nav pills>
     <div>
       <h1 class="userhome-logo" @click="handleRoute('HomeView')">🌱</h1>
+      <div>
+        <b-avatar variant="light" badge badge-left size="60px"></b-avatar>
+        <span class="username">{{ `${username}님` }}</span>
+        <button class="logout-button" @click="logout">
+          <b-icon icon="power" aria-hidden="true"></b-icon> 로그아웃
+        </button>
+      </div>
+
       <b-nav-item active @click="handleRoute('DashBoard')">
         <b-icon icon="display"></b-icon>
         <span class="nav-link-text">대시보드</span>
-      </b-nav-item>
-      <b-nav-item>
-        <b-icon icon="camera-video-fill"></b-icon>
-        <span class="nav-link-text">실시간 CCTV</span>
       </b-nav-item>
       <b-nav-item>
         <b-icon icon="bar-chart-fill"></b-icon>
@@ -28,6 +32,11 @@
 <script>
 export default {
   name: "UserHomeNav",
+  data () {
+    return {
+      username: this.$store.state.userid
+    }
+  },
   methods: {
     handleRoute (route) {
       this.$router.push({
@@ -55,6 +64,7 @@ export default {
   max-width: 250px;
   height: 100vh;
   justify-content: space-between;
+  // background-color: #f9fafb;
   @media (max-width: 920px) {
     flex-direction: row;
     width: 100%;
@@ -65,6 +75,10 @@ export default {
     padding: 1rem 0rem;
     text-align: center;
   }
+
+  .username {
+    font-weight: 700;
+  }
   
   .nav-item {
     margin: 10px 5px;
@@ -73,7 +87,7 @@ export default {
       padding: 1rem 1.25rem;
       border-radius: 30px !important;
       color: $primary-color;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 400;
 
       &:hover,
@@ -96,7 +110,12 @@ export default {
   }
 
   .logout-button {
+    color: #4e5968;
     background-color: transparent;
+
+    &:hover {
+      background: #F7F8F9;
+    }
   }
 }
 </style>

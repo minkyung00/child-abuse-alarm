@@ -3,7 +3,7 @@
     <header id="apply-header">
       <h1 class="apply-logo">🌱</h1>
       <h1 class="apply-title">어린이집 등록</h1>
-      <p class="apply-desc">최초 등록된 어린이집으로만 이용 가능합니다.</p>
+      <p class="apply-desc">어린이집 등록 후 서비스 이용이 가능합니다.</p>
     </header>
 
     <div class="search-bar">

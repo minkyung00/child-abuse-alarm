@@ -1,7 +1,7 @@
 <template>
   <b-row>
     <UserHomeNav class="col-3"></UserHomeNav>
-    <router-view class="col-9 py-5"/>
+    <router-view class="col-9 p-5"/>
   </b-row>
 </template>
 
@@ -18,6 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 .col-9 {
+  background-color: #f9fafb;
   @media (max-width: 920px) {
     width: 100%;
   }

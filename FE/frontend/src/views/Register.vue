@@ -68,7 +68,7 @@ export default {
 
         alert('회원가입이 완료되었습니다!')
         this.$router.push({
-          name: 'HomeView'
+          name: 'ApplyCenter'
         })
       } catch (err) {
         console.log(err)
