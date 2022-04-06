@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-card v-for="alarm in alarmList"
-            :key="alarm"
+            :key="alarm.id"
             :class="`alarm-card-${alarm.status}`">
       <header class="alarm-card-title">
         <b-card-title>
@@ -27,7 +27,7 @@ export default {
   name: "DashBoardAlarmCard",
   props: {
     alarmList: Array
-  }
+  },
 }
 </script>
 

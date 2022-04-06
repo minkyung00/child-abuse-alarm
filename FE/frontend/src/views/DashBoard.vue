@@ -24,6 +24,15 @@
 
 <script>
 import DashBoardAlarmCard from "@/components/DashBoardAlarmCard.vue"
+
+const socket = new WebSocket(
+  'ws://'
+  + '127.0.0.1:8000'
+  + '/ws/notification/'
+  + 'center_name'
+  + '/'
+);
+
 export default {
   name: "DashBoard",
   components: {
@@ -34,16 +43,35 @@ export default {
       centerName: this.$store.state.center,
       alarmList: [
         {
+          id: 1,
           title: "때리기 발생",
           status: "danger",
           date: "2022-03-20"
         },
         {
+          id: 2,
           title: "밀치기 발생",
           status: "success",
           date: "2022-03-21"
         },
       ]
+    }
+  },
+  created () {
+    this.connect()
+    this.getNotification()
+  },
+  methods: {
+    connect () {
+      socket.onopen = function(e) {
+        console.log('서버와 연결되었습니다.')
+      };
+    },
+    getNotification() {
+      socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        console.log(data);
+      };
     }
   }
 }
