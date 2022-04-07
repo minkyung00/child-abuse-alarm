@@ -17,8 +17,8 @@ def announce_likes(sender, instance, created, **kwargs):
         channel_layer=get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             "shares", {
-                "type": "share_message",
-                "message": instance.message,
+                "type": "share_notification",
+                "message": instance.content,
             }
     )
 # @database_sync_to_async
@@ -53,7 +53,7 @@ class NotificationConsumer(WebsocketConsumer):
             self.channel_name
         )
 
-    # Receive message from WebSocket
+    # Receive message from WebSocket (js->django)
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
@@ -62,13 +62,13 @@ class NotificationConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_send)(
             self.center_name,
             {
-                'type': 'share_message',
+                'type': 'share_notification',
                 'message': message
             }
         )
 
     # Receive message from room group
-    def share_message(self, event):
+    def share_notification(self, event):
         message = event['message']
 
         # Send message to WebSocket
