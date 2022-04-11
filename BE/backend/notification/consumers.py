@@ -11,6 +11,7 @@ from .models import Notification
 
 # Notification 모델에 데이터가 추가되면 -> 이 정보를 NotificationConsumer에 있는 share_message에 보냄 -> 정보를 웹소켓이 연결된 페이지로 전송
 
+# DB model에 관련해서 save가 작동하면, 저장이 완료된 이후에 지정한 동작을 수행
 @receiver(post_save, sender=Notification)
 def announce_likes(sender, instance, created, **kwargs):
     if created:
@@ -21,19 +22,6 @@ def announce_likes(sender, instance, created, **kwargs):
                 "message": instance.content,
             }
     )
-# @database_sync_to_async
-# def get_user(user_id):
-#     try:
-#         return Users.objects.get(id=user_id)
-#     except:
-#         return AnonymousUser()
-
-
-# @database_sync_to_async
-# def create_notification(receiver,typeof="task_created",status="unread"):
-#     notification_to_create=notifications.objects.create(user_revoker=receiver,type_of_notification=typeof)
-#     print('I am here to help')
-#     return (notification_to_create.user_revoker.username,notification_to_create.type_of_notification)
 
 
 class NotificationConsumer(WebsocketConsumer):
