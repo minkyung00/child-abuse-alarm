@@ -17,6 +17,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.row {
+  --bs-gutter-x: 0;
+}
+
 .col-9 {
   background-color: #f9fafb;
   @media (max-width: $break-large) {

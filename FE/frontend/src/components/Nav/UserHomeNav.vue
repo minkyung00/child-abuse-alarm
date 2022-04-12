@@ -12,7 +12,7 @@
           variant="light"
           badge
           badge-left
-          size="60px"
+          size="50px"
         />
         <span class="username">
           {{ `${username}님` }}
@@ -105,6 +105,8 @@ export default {
   .userhome-nav {
     @media (max-width: $break-large) {
       display: flex;
+      width: 100%;
+      justify-content: space-between;
       align-items: center;
     }
   }
@@ -118,14 +120,34 @@ export default {
   .userhome-profile {
     display: flex;
     align-items: center;
+    @media (max-width: $break-large) {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .b-avatar {
+      @media (max-width: $break-large) {
+        display: none;
+      }
+    }
 
     .username {
       font-weight: 700;
+      width: 60px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      @media (max-width: $break-large) {
+        width: 60%;
+      }
     }
 
     .logout-button {
+      padding: 0;
       color: #4e5968;
       background-color: transparent;
+      margin-right: 10px;
 
       &:hover {
         background: #F7F8F9;
