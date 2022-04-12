@@ -1,14 +1,19 @@
 <template>
   <div>
-    <b-card v-for="alarm in alarmList"
-            :key="alarm.id"
-            :class="`alarm-card-${alarm.status}`">
+    <b-card
+      v-for="alarm in alarmList"
+      :key="alarm.id"
+      :class="`alarm-card-${alarm.status}`">
+
       <header class="alarm-card-title">
         <b-card-title>
           {{ alarm.title }}
         </b-card-title>
         <div class="alarm-badge">
-          <b-badge pill :variant="alarm.status">{{ alarm.status }}</b-badge>
+          <b-badge
+            pill
+            :variant="alarm.status"
+          >{{ alarm.status }}</b-badge>
         </div>
       </header>
 
@@ -32,6 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 @keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -51,6 +57,9 @@ export default {
 
   .card-body {
     padding: 1.75rem;
+    @media (max-width: 780px) {
+      padding: 1.5rem;
+    }
   }
 }
 
@@ -89,11 +98,13 @@ main {
 
   .card-text {
     margin: 0;
+    font-size: calc(0.7rem + 0.3vw);
   }
 
   .more-button {
     background-color: rgb(255, 255, 255, 0.5);
     border: 1px solid transparent;
+    font-size: calc(0.7rem + 0.3vw);
     // border-color: black;
     // padding: 8px 20px;
     // border-radius: 30px;

@@ -1,13 +1,17 @@
 <template>
   <b-container>
-    <b-card v-for="center in centers"
-            :key="center"
-            :title="center.name">
+
+    <b-card
+      v-for="center in centers"
+      :key="center"
+      :title="center.name">
+
       <b-card-text>
         {{ center.address }}
       </b-card-text>
-      <button @click="handleClickButton(center.id)">등록
-        <b-icon icon="arrow-right"></b-icon>
+
+      <button @click="handleClickButton(center.id)">
+        등록 <b-icon icon="arrow-right" />
       </button>
     </b-card>
   
@@ -20,7 +24,7 @@
 </template>
 
 <script>
-import CenterCodeModal from "@/components/CenterCodeModal.vue"
+import CenterCodeModal from "@/components/Center/CenterCodeModal.vue"
 
 export default {
   name: 'CenterList',
@@ -56,15 +60,28 @@ export default {
     .card-title,
     .card-text {
       margin: 0;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      @media (max-width: $break-small) {
+        width: 100px;
+      }
     }
 
     .card-title {
+      font-size: calc(1rem + 0.3vw);
       margin-left: 10px;
+    }
+
+    .card-text {
+      font-size: calc(0.7rem + 0.3vw);
     }
 
     button {
       background: transparent;
       color: $primary-color;
+      font-size: calc(0.7rem + 0.3vw);
 
       &:hover {
         background: #F7F8F9;

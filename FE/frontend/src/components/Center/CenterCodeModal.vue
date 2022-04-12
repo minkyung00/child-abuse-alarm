@@ -14,14 +14,16 @@
           </div>
 
           <div class="modal-body">
-            <b-form-input v-model="code"
-                          type="text"
-                          placeholder="코드를 입력하세요"/>
+            <b-form-input
+              v-model="code"
+              type="text"
+              placeholder="코드를 입력하세요"/>
           </div>
 
           <div class="modal-footer">
-            <button class="submit-btn"
-                    type="submit"
+            <button 
+              class="submit-btn"
+              type="submit"
             >등록</button>
           </div>
         </form>

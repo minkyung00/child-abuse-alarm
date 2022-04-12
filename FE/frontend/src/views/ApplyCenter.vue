@@ -18,7 +18,7 @@
 
 <script>
 import { getCenterList } from '@/api/center'
-import CenterList from '@/components/CenterList.vue'
+import CenterList from '@/components/Center/CenterList.vue'
 
 export default {
   name: "ApplyCenter",

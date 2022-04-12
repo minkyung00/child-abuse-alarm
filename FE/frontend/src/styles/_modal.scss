@@ -25,7 +25,7 @@
     border-radius: 14px;
     box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 10%);
     transition: all .3s ease;
-    @media (max-width: 420px) {
+    @media (max-width: $break-small) {
       max-width: 300px;
     }
   }
@@ -44,7 +44,7 @@
       float: left;
       font-weight: 600;
       font-size: 1rem;
-      @media (max-width: 420px) {
+      @media (max-width: $break-small) {
         font-size: 0.75rem;
       }
     }

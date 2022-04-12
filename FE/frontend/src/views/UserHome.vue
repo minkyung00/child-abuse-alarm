@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import UserHomeNav from "@/components/UserHomeNav.vue"
+import UserHomeNav from "@/components/Nav/UserHomeNav.vue"
 
 export default {
   name: "UserHome",
@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
 .col-9 {
   background-color: #f9fafb;
-  @media (max-width: 920px) {
+  @media (max-width: $break-large) {
     width: 100%;
   }
 }

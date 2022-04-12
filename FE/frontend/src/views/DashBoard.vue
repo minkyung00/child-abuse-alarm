@@ -82,10 +82,17 @@ h3 {
   padding: 1rem;
 }
 
+.row {
+  @media (max-width: 780px) {
+    display: block;
+  }
+}
+
 .card {
   border: none;
   border-radius: 14px;
   box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
+  margin-bottom: 1rem;
 
   .card-title {
     margin-bottom: 1rem;

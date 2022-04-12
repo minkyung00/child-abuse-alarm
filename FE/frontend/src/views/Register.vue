@@ -7,33 +7,44 @@
     </header>
 
     <form id="register-form" @submit.prevent="submitForm">
-      <b-form-input id="register-id-input"
-                    v-model="userid"
-                    type="text"
-                    placeholder="아이디"
-                    required/>
-      <b-form-input id="register-name-input"
-                    v-model="username"
-                    type="text"
-                    placeholder="이름"
-                    required/>
-      <b-form-input id="register-email-input"
-                    v-model="email"
-                    type="email"
-                    placeholder="이메일"
-                    required/>
-      <b-form-input id="register-password-input"
-                    v-model="password"
-                    type="password"
-                    placeholder="비밀번호"
-                    required/>
-      <b-form-input id="register-password-again-input"
-                    v-model="passwordAgain"
-                    type="password"
-                    placeholder="비밀번호 확인"
-                    required/>
-      <button class="register-form-btn"
-              type="submit"
+      <b-form-input
+        id="register-id-input"
+        v-model="userid"
+        type="text"
+        placeholder="아이디"
+        required/>
+
+      <b-form-input 
+        id="register-name-input"
+        v-model="username"
+        type="text"
+        placeholder="이름"
+        required/>
+
+      <b-form-input
+        id="register-email-input"
+        v-model="email"
+        type="email"
+        placeholder="이메일"
+        required/>
+
+      <b-form-input
+        id="register-password-input"
+        v-model="password"
+        type="password"
+        placeholder="비밀번호"
+        required/>
+
+      <b-form-input
+        id="register-password-again-input"
+        v-model="passwordAgain"
+        type="password"
+        placeholder="비밀번호 확인"
+        required/>
+
+      <button
+        class="register-form-btn"
+        type="submit"
       >가입하기</button>
     </form>
   </b-container>
@@ -67,6 +78,7 @@ export default {
         await registerUser(data)
 
         alert('회원가입이 완료되었습니다!')
+
         this.$router.push({
           name: 'ApplyCenter'
         })
