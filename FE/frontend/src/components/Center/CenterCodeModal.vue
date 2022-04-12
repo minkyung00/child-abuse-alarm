@@ -3,6 +3,7 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <form class="modal-container" @submit.prevent="submitForm">
+
           <div class="modal-header">
             <img src="https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/6562f7bc017800001.png?type=thumb&amp;opt=C72x72" width="36" height="36" alt="" class="ico_cate">
             <h5>코드 등록</h5>
@@ -53,7 +54,9 @@ export default {
         }
         const res = await applyCenterCode(this.centerID, data)
 
+        this.$store.dispatch('getUserInfo')
         alert(`${res.data.center_name}이 등록되었습니다!`)
+
         this.$router.push({
           name: 'UserHome'
         })

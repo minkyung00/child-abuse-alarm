@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+import router from '../router';
 import { loginUser } from '@/api/auth';
 import { getUserInfo, refreshAccessToken, logoutUser } from '@/api/users';
 
@@ -76,9 +77,15 @@ export default new Vuex.Store({
       try {
         const res = await getUserInfo(this.state.userid)
         const center = res.data.center
-
-        commit('setCenter', center)
-        saveCenterToCookie(center)
+        
+        if (center) {
+          commit('setCenter', center)
+          saveCenterToCookie(center)
+        } else {
+          router.push({
+            name: 'ApplyCenter'
+          })
+        }
       } catch (err) {
         console.log('getUserInfo error: ', err)
       }
@@ -90,7 +97,6 @@ export default new Vuex.Store({
         })
         commit('clearUserid')
         commit('clearToken')
-        commit('clearUserInfo')
         commit('clearCenter')
 
         deleteCookie('til_user')
