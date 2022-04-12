@@ -19,7 +19,14 @@
 
 <script>
 export default {
-  name: 'NavbarItem'
+  name: 'NavbarItem',
+  methods: {
+    handleRoute (route) {
+      this.$router.push({
+        name: route
+      }).catch(() => {});
+    }
+  }
 }
 </script>
 
