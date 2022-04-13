@@ -1,0 +1,18 @@
+.info-login,
+.info-register {
+  text-align: center;
+
+  a {
+    margin-left: 10px;
+    color: $primary-color;
+    font-weight: 800;
+  }
+}
+
+.login-form-btn,
+.register-form-btn {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 10px 0px;
+  border-radius: 30px;
+}

@@ -34,13 +34,12 @@
 
         </form>
 
-        <div class="login-info">
-          <p class="info-register"
-          >아직 계정이 없으신가요?</p>
+        <p class="info-register">
+          아직 계정이 없으신가요?
           <a class="link-register"
-             href="/register"
+              href="/register"
           >회원가입하기</a>
-        </div>
+        </p>
 
       </div>
     </b-col>
@@ -137,23 +136,6 @@ export default {
       @media (max-width: $break-small) {
         padding: 0;
       }
-    }
-
-    .login-form-btn {
-      width: 100%;
-      padding: 0.75rem;
-      margin: 10px 0px;
-      border-radius: 30px;
-    }
-
-    .login-info {
-      display: flex;
-      padding: 0rem 1rem;
-    }
-
-    .link-register {
-      margin-left: 10px;
-      color: $primary-color;
     }
   }
 }
