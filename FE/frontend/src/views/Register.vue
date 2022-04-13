@@ -7,46 +7,68 @@
     </header>
 
     <form id="register-form" @submit.prevent="submitForm">
-      <b-form-input
-        id="register-id-input"
-        v-model="userid"
-        type="text"
-        placeholder="아이디"
-        required/>
+      <b-form-group id="input-group-id">
+        <label for="input-id">아이디</label>
+        <b-form-input
+          id="input-id"
+          v-model="userid"
+          type="text"
+          placeholder="아이디"
+          required />
+      </b-form-group>
 
-      <b-form-input 
-        id="register-name-input"
-        v-model="username"
-        type="text"
-        placeholder="이름"
-        required/>
+      <b-form-group id="input-group-username">
+        <label for="input-username">이름</label>
+        <b-form-input 
+          id="input-username"
+          v-model="username"
+          type="text"
+          placeholder="이름"
+          required />
+      </b-form-group>
 
-      <b-form-input
-        id="register-email-input"
-        v-model="email"
-        type="email"
-        placeholder="이메일"
-        required/>
+      <b-form-group id="input-group-email">
+        <label for="input-email">이메일</label>
+        <b-form-input
+          id="input-email"
+          v-model="email"
+          type="email"
+          placeholder="이메일"
+          required />
+      </b-form-group>
 
-      <b-form-input
-        id="register-password-input"
-        v-model="password"
-        type="password"
-        placeholder="비밀번호"
-        required/>
+      <b-form-group id="input-group-password">
+        <label for="input-password">비밀번호</label>
+        <b-form-input
+          id="input-password"
+          v-model="password"
+          type="password"
+          placeholder="비밀번호"
+          required />
+      </b-form-group>
 
-      <b-form-input
-        id="register-password-again-input"
-        v-model="passwordAgain"
-        type="password"
-        placeholder="비밀번호 확인"
-        required/>
+      <b-form-group id="input-group-password-again">
+        <label for="input-password-again">비밀번호 확인</label>
+        <b-form-input
+          id="input-password-again"
+          v-model="passwordAgain"
+          type="password"
+          placeholder="비밀번호 확인"
+          required />
+      </b-form-group>
 
       <button
         class="register-form-btn"
         type="submit"
       >가입하기</button>
     </form>
+
+    <p class="info-login">
+      이미 아이디가 있으신가요?
+      <a class="link-login"
+          href="/"
+      >로그인</a>
+    </p>
   </b-container>
 </template>
 
@@ -97,14 +119,26 @@ export default {
 
   #register-header {
     text-align: center;
-    padding: 3rem 0rem;
+    padding: 2.5rem 0rem;
   }
 
 
   #register-form {
+    margin-bottom: 20px;
+  
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0px 0px 8px 10px;
+    }
+    
     input {
       padding: 0.75rem 1.5rem;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       border-radius: 30px;
 
       &:focus {
@@ -113,13 +147,6 @@ export default {
         box-shadow: 0 0 0 0.25rem #33d27b52;
         color: $primary-color;
       }
-    }
-
-    .register-form-btn {
-      width: 100%;
-      padding: 0.75rem;
-      margin: 10px 0px;
-      border-radius: 30px;
     }
   }
 }
