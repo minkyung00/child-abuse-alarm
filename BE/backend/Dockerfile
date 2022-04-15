@@ -25,5 +25,6 @@ ENV WORKERS=2
 
 # Section 6- Docker Run Checks and Configurations
 EXPOSE 8000
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "backend.wsgi:application"]
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["gunicorn", "--bind", "0.0.0.0:8000", "backend.wsgi:application"]
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "backend.asgi:application"]
