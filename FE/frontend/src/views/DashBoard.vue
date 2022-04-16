@@ -54,7 +54,8 @@ export default {
           status: "success",
           date: "2022-03-21"
         },
-      ]
+      ],
+      result: ''
     }
   },
   created () {
@@ -68,9 +69,12 @@ export default {
       };
     },
     getNotification() {
-      socket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        console.log(data);
+      socket.onmessage = (e) => {
+        const res = JSON.parse(e.data);
+
+        if (res.data) {
+          this.alarmList.push(res.data);
+        }
       };
     }
   }
