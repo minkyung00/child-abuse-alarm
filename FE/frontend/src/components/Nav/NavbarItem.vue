@@ -5,7 +5,7 @@
     <span class="nav-link-text">대시보드</span>
   </b-nav-item>
 
-  <b-nav-item>
+  <b-nav-item @click="handleRoute('VideoView')">
     <b-icon icon="bar-chart-fill" />
     <span class="nav-link-text">분석 시스템</span>
   </b-nav-item>
