@@ -70,10 +70,12 @@ export default {
     },
     getNotification() {
       socket.onmessage = (e) => {
-        const res = JSON.parse(e.data);
+        const alarms = JSON.parse(e.data).data;
 
-        if (res.data) {
-          this.alarmList.push(res.data);
+        if (alarms) {
+          for (const alarm of alarms) {
+            this.alarmList.push(alarm);
+          }
         }
       };
     }
