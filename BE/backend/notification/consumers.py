@@ -26,7 +26,12 @@ def send_update(sender, instance, created, **kwargs):
                 "type": "notify",
                 "data": serializer.data
             }
-    )
+        )
+
+def get_notification():
+    notifications = Notification.objects.all()
+    serializer = NotificationSerializer(notifications, many=True)
+    return serializer.data
 
 
 class NotificationConsumer(WebsocketConsumer):
@@ -40,6 +45,17 @@ class NotificationConsumer(WebsocketConsumer):
             self.channel_name
         )
         self.accept() # websocket 연결 
+
+        # notification이 있으면 알람 전송
+        notifications = get_notification()
+        if notifications:
+            async_to_sync(self.channel_layer.group_send)(
+                "center_name", {
+                    "type": "notify",
+                    "data": notifications
+                }
+            )
+
 
 
     def disconnect(self, close_code):
