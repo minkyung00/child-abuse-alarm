@@ -11,6 +11,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Section 3- Compiler and OS libraries
 RUN apt-get update \
   && apt-get install -y --no-install-recommends build-essential libpq-dev \
+  && apt-get install ffmpeg libsm6 libxext6 -y \
   && rm -rf /var/lib/apt/lists/*
 
 # Section 4- Project libraries and User Creation

@@ -229,19 +229,19 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('172.18.0.1', 6379)]
+            "hosts": [('capstone_redis', 6379)]
         }
     }
 }
 
 # aws s3
-AWS_ACCESS_KEY_ID = 'AKIA2UJDATHMOCFHIMPA'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = get_secret("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = get_secret("AWS_SECRET_ACCESS_KEY")
 
 AWS_REGION = 'ap-northeast-2'
 AWS_STORAGE_BUCKET_NAME = 'capstone1234'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
 
 # celery
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/1'
+CELERY_BROKER_URL = 'redis://capstone_redis:6379'
+CELERY_RESULT_BACKEND = 'redis://capstone_redis:6379'
