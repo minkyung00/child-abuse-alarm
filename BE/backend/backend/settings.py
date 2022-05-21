@@ -239,9 +239,18 @@ AWS_ACCESS_KEY_ID = get_secret("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = get_secret("AWS_SECRET_ACCESS_KEY")
 
 AWS_REGION = 'ap-northeast-2'
-AWS_STORAGE_BUCKET_NAME = 'capstone1234'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
+AWS_STORAGE_BUCKET_NAME = 'capstone-new'
+AWS_S3_CUSTOM_DOMAIN = 'https://%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
 
 # celery
-CELERY_BROKER_URL = 'redis://capstone_redis:6379'
-CELERY_RESULT_BACKEND = 'redis://capstone_redis:6379'
+CELERY_BROKER_URL = 'redis://capstone_redis:6379/1'
+CELERY_RESULT_BACKEND = 'redis://capstone_redis:6379/1'
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://capstone_redis:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}

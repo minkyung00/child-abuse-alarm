@@ -14,13 +14,13 @@ from notification.views import save_notification
 s3 = boto3.client(
         's3',
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-        aws_secret_access_key = settings.AWS_SECRET_ACCESS_KEY,
-        region_name = settings.AWS_REGION
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_REGION
       )
 
 # 없는 url이면 True 반환
 def is_not_valid_url(index):
-    url = 'https://capstone1234.s3.ap-northeast-2.amazonaws.com/' + str(index) + '.jpg'
+    url = settings.AWS_S3_CUSTOM_DOMAIN + '/' + str(index) + '.jpg'
     try:
         resp = urllib.request.urlopen(url)
     except HTTPError as e:
