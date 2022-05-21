@@ -1,7 +1,7 @@
 <template>
   <b-row>
-    <UserHomeNav class="col-3"></UserHomeNav>
-    <router-view class="col-9 p-5"/>
+    <UserHomeNav></UserHomeNav>
+    <router-view />
   </b-row>
 </template>
 
