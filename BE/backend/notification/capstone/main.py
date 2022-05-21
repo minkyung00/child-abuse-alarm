@@ -6,6 +6,7 @@ import urllib.request
 from urllib.error import HTTPError
 
 from django.conf import settings
+from notification.views import save_notification
 
 # for i in range(1, 100):
 #     s3.upload_file('tmp_data/'+str(i)+'.jpg', bucket_name, str(i)+'.jpg')
@@ -49,10 +50,13 @@ def make_video(key_list, video_index, hit_flag, kick_flag):
     # 동영상 s3에 업로드
     if hit_flag == 1 and kick_flag == 0:
         s3.upload_file('test/test.mp4', settings.AWS_STORAGE_BUCKET_NAME, 'video/천호어린이집,' + str(video_index) + ',hit' + '.mp4')
+        save_notification('천호어린이집', video_index, 'hit')
     elif hit_flag == 0 and kick_flag == 1:
         s3.upload_file('test/test.mp4', settings.AWS_STORAGE_BUCKET_NAME, 'video/천호어린이집,' + str(video_index) + ',kick' + '.mp4')
+        save_notification('천호어린이집', video_index, 'kick')
     elif hit_flag == 1 and kick_flag == 1:
         s3.upload_file('test/test.mp4', settings.AWS_STORAGE_BUCKET_NAME, 'video/천호어린이집,' + str(video_index) + ',hit,kick' + '.mp4')
+        save_notification('천호어린이집', video_index, 'hit,kick')
 
     # test 폴더 삭제
     shutil.rmtree('test')

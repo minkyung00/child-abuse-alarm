@@ -23,22 +23,18 @@ def get_s3object():
   return contents_list
 
 
-def save_notification():
-  contents_list = get_s3object()
-
+def save_notification(target_center, video_index, act):
   data = {}
 
-  for content in contents_list:
-    key = content['Key']
-    if ('/' not in key):
-      continue
+  key = 'video/' + target_center + video_index + ',' + act + '.mp4'
 
-    data['target_center'], data['title'] = key.split('/')
-    data['content'] = 'https://' + settings.AWS_S3_CUSTOM_DOMAIN + '/' + key
-  
-    serializer = NotificationSerializer(data=data)
-    if serializer.is_valid():
-        serializer.save()
+  data['target_center'] = target_center
+  data['title'] = video_index + ',' + act
+  data['content'] = 'https://' + settings.AWS_S3_CUSTOM_DOMAIN + '/' + key
+
+  serializer = NotificationSerializer(data=data)
+  if serializer.is_valid():
+      serializer.save()
 
 class NotificationView(APIView):
     def get(self, request, id):
