@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3>{{ centerName }}</h3>
+    <!-- <h3>{{ centerName }}</h3> -->
     <b-row>
-      <b-col>
+      <b-col cols="3">
         <b-card>
           <b-card-title>
             <img src="https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/6562f7bc017800001.png?type=thumb&amp;opt=C72x72" width="36" height="36" alt="" class="ico_cate">  알람
@@ -11,10 +11,15 @@
         </b-card>
       </b-col>
 
-      <b-col>
+      <b-col cols="6">
         <b-card>
           <b-card-title>
-            <img src="https://www.kakaocorp.com/page/ico_stock.png" width="36" height="36" alt="" class="ico_cate">  현황
+            <img src="https://www.kakaocorp.com/page/ico_stock.png" width="36" height="36" alt="" class="ico_cate">  이번 주
+          </b-card-title>
+        </b-card>
+        <b-card>
+          <b-card-title>
+            <img src="https://www.kakaocorp.com/page/ico_stock.png" width="36" height="36" alt="" class="ico_cate">  이번 달
           </b-card-title>
         </b-card>
       </b-col>
@@ -40,7 +45,8 @@ export default {
   },
   data () {
     return {
-      centerName: this.$store.state.center,
+      // centerName: this.$store.state.center,
+      centerName: '천호어린이집',
       alarmList: [
         {
           id: 1,
@@ -51,7 +57,7 @@ export default {
         {
           id: 2,
           title: "밀치기 발생",
-          status: "success",
+          status: "warning",
           date: "2022-03-21"
         },
       ],
@@ -89,8 +95,17 @@ h3 {
 }
 
 .row {
+  justify-content: center;
+  margin-top: -40px;
   @media (max-width: 780px) {
     display: block;
+  }
+}
+
+.col-3,
+.col-6 {
+  @media (max-width: $break-medium) {
+    width: 100%;
   }
 }
 

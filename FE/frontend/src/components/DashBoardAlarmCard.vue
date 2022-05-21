@@ -6,20 +6,21 @@
       :class="`alarm-card-${alarm.status}`">
 
       <header class="alarm-card-title">
-        <b-card-title>
-          {{ alarm.title }}
-        </b-card-title>
+        <!-- <img src="../assets/alert-1.png" alt="" width="36" height="36"> -->
         <div class="alarm-badge">
           <b-badge
             pill
             :variant="alarm.status"
           >{{ alarm.status }}</b-badge>
         </div>
+        <b-card-title>
+          {{ alarm.title }}
+        </b-card-title>
       </header>
 
       <main>
         <b-card-text>
-          {{ `날짜: ${alarm.date}` }}
+          {{ `${alarm.date}` }}
         </b-card-text>
         <button class="more-button">자세히보기</button>
       </main>
@@ -53,7 +54,14 @@ export default {
   position: relative;
   animation: fadeInUp 0.8s ease-in-out;
   margin-bottom: 20px;
+  border: none;
   border-radius: 30px;
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+  &:hover {
+    box-shadow: 0px 4px 24px 0px rgb(0 0 0 / 10%);
+    transform: translateY(-10px);
+  }
 
   .card-body {
     padding: 1.75rem;
@@ -64,11 +72,13 @@ export default {
 }
 
 .alarm-card-danger {
-  background-color: $light-red;
+  color: $color-text-danger;
+  background-color: $color-bg-danger;
 }
 
-.alarm-card-success {
-  background-color: $light-green;
+.alarm-card-warning {
+  color: $color-text-warning;
+  background-color: $color-bg-warning;
 }
 
 .alarm-card-title {
@@ -77,17 +87,26 @@ export default {
   margin-bottom: 10px;
 
   h4.card-title {
-    font-size: calc(1rem + 0.3vw);
-    margin-right: 10px;
     margin-bottom: 0px;
+    font-size: calc(1rem + 0.3vw);
+  }
+
+  .badge {
+    padding: 0.5em 1em;
+    margin-right: 10px;
+    border-radius: 1rem;
+    color: white;
+    font-size: calc(0.5rem + 0.4vw);
   }
 
   .badge-danger {
-    background-color: red;
+    color: $color-bg-danger;
+    background-color: $color-text-danger;
   }
 
-  .badge-success {
-    background-color: green;
+  .badge-warning {
+    color: $color-bg-warning;
+    background-color: $color-text-warning;
   }
 }
 
@@ -98,16 +117,16 @@ main {
 
   .card-text {
     margin: 0;
+    color: $color-grey-700;
     font-size: calc(0.7rem + 0.3vw);
+    font-weight: $font-weight-semibold;
   }
 
   .more-button {
+    color: $color-grey-800;
     background-color: rgb(255, 255, 255, 0.5);
     border: 1px solid transparent;
     font-size: calc(0.7rem + 0.3vw);
-    // border-color: black;
-    // padding: 8px 20px;
-    // border-radius: 30px;
   }
 }
 </style>
