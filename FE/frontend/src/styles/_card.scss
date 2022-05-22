@@ -1,0 +1,18 @@
+.card {
+  border: none;
+  border-radius: 14px;
+  box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
+  margin-bottom: 1rem;
+
+  .card-title {
+    margin-bottom: 1rem;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .card-text {
+    display: flex;
+  }
+}

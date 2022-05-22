@@ -12,11 +12,7 @@
       </b-col>
 
       <b-col cols="6">
-        <b-card>
-          <b-card-title>
-            <img src="https://www.kakaocorp.com/page/ico_stock.png" width="36" height="36" alt="" class="ico_cate">  이번 주
-          </b-card-title>
-        </b-card>
+        <WeeklyChart />
         <b-card>
           <b-card-title>
             <img src="https://www.kakaocorp.com/page/ico_stock.png" width="36" height="36" alt="" class="ico_cate">  이번 달
@@ -28,7 +24,8 @@
 </template>
 
 <script>
-import DashBoardAlarmCard from "@/components/DashBoardAlarmCard.vue"
+import DashBoardAlarmCard from "@/components/DashBoard/AlarmCard.vue"
+import WeeklyChart from "@/components/DashBoard/WeeklyChart.vue"
 
 const socket = new WebSocket(
   'ws://'
@@ -41,7 +38,8 @@ const socket = new WebSocket(
 export default {
   name: "DashBoard",
   components: {
-    DashBoardAlarmCard
+    DashBoardAlarmCard,
+    WeeklyChart
   },
   data () {
     return {
@@ -106,21 +104,6 @@ h3 {
 .col-6 {
   @media (max-width: $break-medium) {
     width: 100%;
-  }
-}
-
-.card {
-  border: none;
-  border-radius: 14px;
-  box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
-  margin-bottom: 1rem;
-
-  .card-title {
-    margin-bottom: 1rem;
-  }
-
-  .card-body {
-    padding: 1.5rem;
   }
 }
 </style>
