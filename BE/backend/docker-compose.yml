@@ -6,6 +6,7 @@ networks:
         - subnet: 172.20.1.0/24
 volumes:  # Container 들에서 사용되는 Volume을 정의한다.
     capstone-redis: {}
+    capstone-backend: {}
 # 띄울 컨테이너
 services:
     capstone:
@@ -16,7 +17,9 @@ services:
             context: .
             dockerfile: Dockerfile        
         ports:
-            - "8000:8000"          
+            - "8000:8000"
+        volumes:
+            - capstone-backend:/app
         networks:
             capstone:
                 ipv4_address: 172.20.1.4
