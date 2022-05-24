@@ -20,9 +20,9 @@
       <div class="userhome-calendar">
         <b-icon icon="chevron-left" />
         <div class="date">
-          <p class="month">5월</p>
-          <p class="day">21일</p>
-          <p class="dayweek">토요일</p>
+          <p class="month">{{ `${this.month}월` }}</p>
+          <p class="day">{{ `${this.day}일` }}</p>
+          <p class="weekday">{{ `${this.weekday}요일` }}</p>
         </div>
         <b-icon icon="chevron-right" />
       </div>
@@ -50,8 +50,14 @@ export default {
   data () {
     return {
       username: this.$store.state.userid,
-      centerName: '천호어린이집'
+      centerName: '천호어린이집',
+      month: '',
+      day: '',
+      weekday: ''
     }
+  },
+  mounted () {
+    this.getCurrentDate()
   },
   methods: {
     handleRoute (route) {
@@ -69,6 +75,26 @@ export default {
         console.log(err)
       }
     },
+    getCurrentDate () {
+      const now = new Date();
+      this.month = now.getMonth() + 1;
+      this.day = now.getDate()
+      this.weekday = this.getWeekday(now.getDay());
+    },
+    getWeekday (day) {
+      let weeks = {
+        0: "일",
+        1: "월",
+        2: "화",
+        3: "수",
+        4: "목",
+        5: "금",
+        6: "토",
+        7: "일"
+      }
+
+      return weeks[day]
+    } 
   }
 }
 </script>
@@ -175,7 +201,7 @@ export default {
       font-weight: $font-weight-extrabold;
     }
 
-    .dayweek {
+    .weekday {
       font-size: 24px;
       font-weight: $font-weight-semibold;
     }
