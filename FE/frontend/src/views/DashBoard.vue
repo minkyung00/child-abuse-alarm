@@ -95,15 +95,19 @@ h3 {
 .row {
   justify-content: center;
   margin-top: -40px;
-  @media (max-width: 780px) {
-    display: block;
+}
+
+.col-6 {
+  @media (max-width: $break-xlarge) {
+    width: 60%;
   }
 }
 
 .col-3,
 .col-6 {
-  @media (max-width: $break-medium) {
-    width: 100%;
+  @media (max-width: $break-large) {
+    width: 90%;
   }
 }
+
 </style>

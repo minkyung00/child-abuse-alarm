@@ -103,6 +103,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-text {
+  @media (max-width: $break-small) {
+    display: block !important;
+  }
+}
+
 #chart-container {
   position: relative;
   width: 300px;
@@ -150,10 +156,17 @@ export default {
 
     .percent {
       font-size: 18px;
+      @media (max-width: $break-xlarge) {
+        display: none;
+      }
+      @media (max-width: $break-large) {
+        display: block;
+      }
     }
 
     .total {
-      font-size: 20px;
+      flex-shrink: 0;
+      font-size: calc(0.75rem + 0.7vw);
     }
   }
 }

@@ -38,6 +38,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../styles/_mixin.scss';
 
 @keyframes fadeInUp {
   0% {
@@ -85,8 +86,12 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  @media (max-width: $break-xlarge) {
+    display: block;
+  }
 
   h4.card-title {
+    @include ellipse;
     margin-bottom: 0px;
     font-size: calc(1rem + 0.3vw);
   }
@@ -97,6 +102,9 @@ export default {
     border-radius: 1rem;
     color: white;
     font-size: calc(0.5rem + 0.4vw);
+    @media (max-width: $break-xlarge) {
+      margin-bottom: 10px;
+    }
   }
 
   .badge-danger {
@@ -114,8 +122,12 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: $break-xlarge) {
+    display: block;
+  }
 
   .card-text {
+    @include ellipse;
     margin: 0;
     color: $color-grey-700;
     font-size: calc(0.7rem + 0.3vw);
@@ -123,10 +135,14 @@ main {
   }
 
   .more-button {
+    @include ellipse;
     color: $color-grey-800;
     background-color: rgb(255, 255, 255, 0.5);
     border: 1px solid transparent;
     font-size: calc(0.7rem + 0.3vw);
+    @media (max-width: $break-xlarge) {
+      float: right;
+    }
   }
 }
 </style>

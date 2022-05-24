@@ -8,21 +8,11 @@
       >🌱</b-navbar-brand> -->
 
       <div class="userhome-profile">
-        <!-- <b-avatar
-          variant="light"
-          badge
-          badge-left
-          size="50px"
-        /> -->
         <h3 class="center-name">{{ centerName }}</h3>
         <span class="username">
           {{ `${username}님, 안녕하세요` }} 
         </span>
         <button class="logout-button" @click="logout">
-          <!-- <b-icon
-            icon="power"
-            aria-hidden="true"
-          /> -->
           로그아웃
         </button>
       </div>
@@ -32,28 +22,12 @@
         <div class="date">
           <p class="month">5월</p>
           <p class="day">21일</p>
-          <p class="week">토요일</p>
+          <p class="dayweek">토요일</p>
         </div>
         <b-icon icon="chevron-right" />
       </div>
 
       <NavbarItem class="desktop-navbar" />
-
-      <!--Toggler-->
-      <!-- <b-navbar-toggle
-        target="nav-collapse"
-      >
-        <template #default="{ expanded }">
-          <b-icon
-            v-if="expanded"
-            icon="chevron-bar-up"
-          />
-          <b-icon
-            v-else
-            icon="chevron-bar-down"
-          />
-        </template>
-      </b-navbar-toggle> -->
     </div>
 
     <!-- <b-collapse
@@ -144,31 +118,17 @@ export default {
     align-items: center;
     color: white;
     @media (max-width: $break-large) {
-      width: 100%;
       justify-content: space-between;
     }
 
-    .b-avatar {
-      @media (max-width: $break-large) {
-        display: none;
-      }
-    }
-
     .center-name {
-      font-weight: 900;
+      font-weight: $font-weight-extrabold;
     }
 
     .username {
-      // width: 100px;
       display: block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       font-size: 18px;
-      font-weight: 700;
-      @media (max-width: $break-large) {
-        width: 60%;
-      }
+      font-weight: $font-weight-bold;
     }
 
     .logout-button {
@@ -189,6 +149,7 @@ export default {
 
   .userhome-calendar {
     display: flex;
+    justify-content: center;
     align-items: center;
     color: white;
 
@@ -214,23 +175,10 @@ export default {
       font-weight: $font-weight-extrabold;
     }
 
-    .week {
+    .dayweek {
       font-size: 24px;
       font-weight: $font-weight-semibold;
     }
   }
-
-  .navbar-toggler {
-    display: none;
-  }
-
-  // @media (max-width: $break-large) {
-  //   .navbar-toggler {
-  //     display: block;
-  //   }
-  //   .desktop-navbar {
-  //     display: none;
-  //   }
-  // }
 }
 </style>

@@ -33,6 +33,7 @@ export default {
 <style lang="scss" scoped>
 .userhome-navbar {
   display: flex;
+  justify-content: center;
 }
 
 .nav-item {
