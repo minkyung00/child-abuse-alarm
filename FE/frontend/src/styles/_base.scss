@@ -14,3 +14,7 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px #33d27b52 inset !important;
 }
+
+li {
+  list-style: none;
+}
