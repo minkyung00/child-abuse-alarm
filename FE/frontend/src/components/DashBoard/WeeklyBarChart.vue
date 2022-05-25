@@ -186,24 +186,6 @@ export default {
   }
 }
 
-
-
-.badge {
-  padding: 0.5em 2em;
-  margin: 0 1.5rem;
-  border-radius: 1rem;
-  color: white;
-  font-size: calc(0.5rem + 0.4vw);
-}
-
-.kick-badge {
-  background-color: $color-text-warning;
-}
-
-.hit-badge {
-  background-color: $color-text-danger;
-}
-
 .detail-button {
   float: right;
   background-color: transparent;

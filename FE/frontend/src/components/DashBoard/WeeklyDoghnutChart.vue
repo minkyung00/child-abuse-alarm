@@ -20,7 +20,7 @@
                 <b-badge
                   pill
                   variant="danger"
-                  class="danger-badge"
+                  class="badge-danger"
                 >{{ `위험` }}</b-badge>
                 <p class="percent">70%</p>
                 <!-- <p class="desc">* 5회 이상의 폭력행위</p> -->
@@ -35,7 +35,7 @@
                 <b-badge
                   pill
                   variant="danger"
-                  class="warning-badge"
+                  class="badge-warning"
                 >{{ `경고` }}</b-badge>
                 <p class="percent">30%</p>
                 
@@ -50,7 +50,7 @@
                 <b-badge
                   pill
                   variant="danger"
-                  class="caution-badge"
+                  class="badge-caution"
                 >{{ `주의` }}</b-badge>
                 <p class="percent">30%</p>
               </div>
@@ -210,27 +210,9 @@ export default {
   }
 }
 
-
-
 .badge {
   padding: 0.5em 1.2em;
   margin: 0 1rem;
-  border-radius: 1rem;
-  color: white;
-  font-size: calc(0.5rem + 0.4vw);
-  font-weight: $font-weight-extrabold;
-}
-
-.danger-badge {
-  background-color: $color-text-danger;
-}
-
-.warning-badge {
-  background-color: $color-text-warning;
-}
-
-.caution-badge {
-  background-color: $color-text-caution;
 }
 
 .detail-button {
