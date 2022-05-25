@@ -19,6 +19,7 @@ export default {
 <style lang="scss" scoped>
 .row {
   --bs-gutter-x: 0;
+  justify-content: center;
 }
 
 .col-9 {
