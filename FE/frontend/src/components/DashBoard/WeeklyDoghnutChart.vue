@@ -11,47 +11,66 @@
           :options="chart.options"
           id="chart-container"
         />
-        <div class="chart-description">
-          <h5 class="chart-title">{{ `이번주 폭력행위 횟수` }}</h5>
+        <ul class="chart-description">
+          <!-- <h5 class="chart-title">{{ `이번주 폭력행위 횟수` }}</h5> -->
 
-          <div class="chart-legend">
+          <li class="chart-legend">
             <div class="chart-legend__info">
               <div class="chart-legend__label">
                 <b-badge
                   pill
                   variant="danger"
-                  class="hit-badge"
-                >{{ `때리기` }}</b-badge>
+                  class="danger-badge"
+                >{{ `위험` }}</b-badge>
                 <p class="percent">70%</p>
+                <!-- <p class="desc">* 5회 이상의 폭력행위</p> -->
               </div>
               <p class="total">총 7회</p>
             </div>
-          </div>
+          </li>
           
-          <div class="chart-legend">
+          <li class="chart-legend">
             <div class="chart-legend__info">
               <div class="chart-legend__label">
                 <b-badge
                   pill
                   variant="danger"
-                  class="kick-badge"
-                >{{ `밀치기` }}</b-badge>
+                  class="warning-badge"
+                >{{ `경고` }}</b-badge>
+                <p class="percent">30%</p>
+                
+              </div>
+              <p class="total">총 3회</p>
+            </div>
+          </li>
+
+          <li class="chart-legend">
+            <div class="chart-legend__info">
+              <div class="chart-legend__label">
+                <b-badge
+                  pill
+                  variant="danger"
+                  class="caution-badge"
+                >{{ `주의` }}</b-badge>
                 <p class="percent">30%</p>
               </div>
               <p class="total">총 3회</p>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </b-card-text>
-      <button class="detail-button">상세히 보러가기</button>
+      <button
+        class="detail-button"
+        @click="handleRoute"
+      >상세히 보러가기</button>
     </b-card>
   </div>
 </template>
 
 <script>
-import DoughnutChart from "@/utils/chart.js"
+import DoughnutChart from "@/utils/doughnutChart.js"
 export default {
-  name: "WeeklyChart",
+  name: "WeeklyDoughnutChart",
   components: {
     DoughnutChart
   },
@@ -60,26 +79,27 @@ export default {
       chart: {
         type: 'doughnut',
         data: {
-          labels: ["때리기", "밀치기"],
+          labels: ["위험", "경고", "주의"],
           datasets: [{
             backgroundColor: [
-              "rgba(255, 99, 132)",
-              "rgb(255, 205, 86)"
+              "#f96f7d",
+              "#ffcc80",
+              "#ffba94"
             ],
-            // borderColor: [
-            //   "rgba(255, 99, 132, 1)",
-            //   "rgba(255, 159, 64, 1)"
-            // ],
-            borderWidth: 1,
+            borderWidth: 2,
             hoverOffset: 4,
-            data: [70, 30]
+            data: [6, 3, 1]
           }]
         },
         options: {
           plugins: {
+            title: {
+              display: true,
+              text: '이번 주 강도별 폭력행위'
+            },
             legend: {
-              display: false,
-              position: "right",
+              display: true,
+              position: "bottom",
               labels: {
                 font: {
                   size: 16
@@ -91,6 +111,9 @@ export default {
                   size: 16
                 }
               },
+              layout: {
+                padding: 20
+              },
               responsive: false,
               maintainAspectRatio: false,
             }
@@ -98,6 +121,13 @@ export default {
         }
       },
     }
+  },
+  methods: {
+    handleRoute () {
+      this.$router.push({
+        name: 'Weekly'
+      })
+    },
   }
 }
 </script>
@@ -110,9 +140,13 @@ export default {
 }
 
 #chart-container {
-  position: relative;
-  width: 300px;
-  height: 300px;
+  // position: relative;
+  // width: 70%;
+  // height: 70%;
+  width: 70%;
+  height: 70%;
+  min-width: 300px;
+  min-height: 300px;
 }
 
 .chart-description {
@@ -134,7 +168,7 @@ export default {
       content: '';
       display: block;
       height: 1px;
-      margin: 1.5rem 0;
+      margin: 1rem 0;
       background-color: $color-grey-300;
     }
 
@@ -164,6 +198,11 @@ export default {
       }
     }
 
+    .desc {
+      font-size: 12px;
+      color: $color-grey-500;
+    }
+
     .total {
       flex-shrink: 0;
       font-size: calc(0.75rem + 0.7vw);
@@ -174,24 +213,32 @@ export default {
 
 
 .badge {
-  padding: 0.5em 2em;
-  margin: 0 1.5rem;
+  padding: 0.5em 1.2em;
+  margin: 0 1rem;
   border-radius: 1rem;
   color: white;
   font-size: calc(0.5rem + 0.4vw);
+  font-weight: $font-weight-extrabold;
 }
 
-.kick-badge {
+.danger-badge {
+  background-color: $color-text-danger;
+}
+
+.warning-badge {
   background-color: $color-text-warning;
 }
 
-.hit-badge {
-  background-color: $color-text-danger;
+.caution-badge {
+  background-color: $color-text-caution;
 }
 
 .detail-button {
   float: right;
   background-color: transparent;
   color: $color-nav-green;
+  &:hover {
+    background-color: $color-grey-50;
+  }
 }
 </style>

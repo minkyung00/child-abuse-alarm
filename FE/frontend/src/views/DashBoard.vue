@@ -12,7 +12,7 @@
       </b-col>
 
       <b-col cols="6">
-        <WeeklyChart />
+        <WeeklyDoghnutChart />
         <b-card>
           <b-card-title>
             <img src="https://www.kakaocorp.com/page/ico_stock.png" width="36" height="36" alt="" class="ico_cate">  이번 달
@@ -25,7 +25,7 @@
 
 <script>
 import DashBoardAlarmCard from "@/components/DashBoard/AlarmCard.vue"
-import WeeklyChart from "@/components/DashBoard/WeeklyChart.vue"
+import WeeklyDoghnutChart from "@/components/DashBoard/WeeklyDoghnutChart.vue"
 
 const socket = new WebSocket(
   'ws://'
@@ -39,7 +39,7 @@ export default {
   name: "DashBoard",
   components: {
     DashBoardAlarmCard,
-    WeeklyChart
+    WeeklyDoghnutChart
   },
   data () {
     return {
