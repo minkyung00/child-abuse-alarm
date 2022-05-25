@@ -22,18 +22,46 @@
         <b-card-text>
           {{ `${alarm.date}` }}
         </b-card-text>
-        <button class="more-button">자세히보기</button>
+        <button
+          class="more-button"
+          @click="showAlarmModal(alarm)"
+        >자세히보기</button>
       </main>
     </b-card>
+    <AlarmModal
+      v-if="showModal"
+      @close="showModal = false"
+      :notificationID="selectedID"
+      :notification="notification"
+    />
   </div>
 </template>
 
 <script>
+import AlarmModal from "@/components/DashBoard/AlarmModal.vue"
 export default {
   name: "DashBoardAlarmCard",
-  props: {
-    alarmList: Array
+  components: {
+    AlarmModal
   },
+  props: {
+    alarmList: Array,
+  },
+  data () {
+    return {
+      showModal: false,
+      selectedID: '',
+      notification: ''
+    }
+  },
+  methods: {
+    showAlarmModal (alarm) {
+      this.showModal = true
+      this.selectedID = alarm.id
+      this.notification = alarm
+      console.log(this.selectedID)
+    }
+  }
 }
 </script>
 
@@ -94,27 +122,6 @@ export default {
     @include ellipse;
     margin-bottom: 0px;
     font-size: calc(1rem + 0.3vw);
-  }
-
-  .badge {
-    padding: 0.5em 1em;
-    margin-right: 10px;
-    border-radius: 1rem;
-    color: white;
-    font-size: calc(0.5rem + 0.4vw);
-    @media (max-width: $break-xlarge) {
-      margin-bottom: 10px;
-    }
-  }
-
-  .badge-danger {
-    color: $color-bg-danger;
-    background-color: $color-text-danger;
-  }
-
-  .badge-warning {
-    color: $color-bg-warning;
-    background-color: $color-text-warning;
   }
 }
 
