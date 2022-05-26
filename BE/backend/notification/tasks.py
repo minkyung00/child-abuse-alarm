@@ -3,7 +3,7 @@ from celery import shared_task
 
 @shared_task
 def task_upload_video():
-    from .capstone.main import upload_video
+    from .capstone_new.main import upload_video
     import boto3
     from django.conf import settings
     s3 = boto3.client(
