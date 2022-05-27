@@ -1,0 +1,18 @@
+@mixin scroll-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap; // 길이가 넘어가도 뚫고 나오게
+  -webkit-overflow-scrolling: touch; // 모바일에서 터치할 때 가속도가 붙게
+  // 브라우저에서 스크롤바 없애기
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+      display: none;
+  }
+}
+
+@mixin ellipse {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
