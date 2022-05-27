@@ -25,14 +25,14 @@ const data = {
     {
       label: '때리기',
       data: [5, 3, 2, 1, 6, 2, 4],
-      borderColor: '#15c07d',
-      backgroundColor: '#15c07d'
+      borderColor: '#a6eaae',
+      backgroundColor: '#a6eaae'
     },
     {
       label: '발차기',
       data: [6, 5, 0, 1, 3, 5, 0],
-      borderColor: '#bcf5d5',
-      backgroundColor: '#bcf5d5'
+      borderColor: '#a0e6e3',
+      backgroundColor: '#a0e6e3'
     },
   ]
 }

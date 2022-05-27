@@ -94,7 +94,7 @@ h3 {
 
 .row {
   justify-content: center;
-  margin-top: -40px;
+  margin-top: -20px;
 }
 
 .col-6 {

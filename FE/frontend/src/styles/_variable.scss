@@ -19,6 +19,11 @@ $color-grey-700: #4e5968;
 $color-grey-800: #333d4b;
 $color-grey-900: #191f28;
 
+$color-opacity-25: hsla(0,0%,100%,.25);
+
+// background
+$color-bg-gradient: linear-gradient(270deg,#b5f300,#a0e6e3);
+
 // color-badge
 $color-bg-danger: #ffebee;
 $color-bg-warning: #ffede4;

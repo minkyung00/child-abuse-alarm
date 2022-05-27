@@ -107,7 +107,8 @@ export default {
   // max-width: 250px;
   // height: 100vh;
   justify-content: space-between;
-  background-color: $color-nav-green;
+  // background-color: $color-nav-green;
+  background-image: $color-bg-gradient;
   // @media (max-width: $break-large) {
   //   height: 100%;
   //   flex-direction: row;

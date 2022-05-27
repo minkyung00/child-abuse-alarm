@@ -51,7 +51,7 @@ export default {
 
     &:hover,
     &:focus {
-      background-color: $primary-color;
+      background-color: $color-opacity-25;
       color: white;
       font-weight: bold;
       opacity: 1;
@@ -59,7 +59,8 @@ export default {
   }
 
   .nav-link.active {
-    background-color: $primary-color !important;
+    background-color: $color-opacity-25;
+    // background-color: $primary-color !important;
     color: white;
     font-weight: bold;
     opacity: 1;
