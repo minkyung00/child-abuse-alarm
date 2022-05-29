@@ -43,6 +43,8 @@ services:
             context: .
             dockerfile: Dockerfile
         command: celery -A backend worker -l info
+        volumes:
+            - capstone-backend:/app
         networks:
             capstone:
                 ipv4_address: 172.20.1.5
