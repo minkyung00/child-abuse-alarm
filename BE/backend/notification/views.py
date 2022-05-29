@@ -59,8 +59,8 @@ def save_notification(target_center, content):
 
   serializer = NotificationSerializer(data=data)
   if serializer.is_valid():
-      serializer.save()
-      return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer.save()
+  return Response(serializer.data, status=status.HTTP_200_OK)
 
 class NotificationView(APIView):
     def get(self, request, id):
@@ -73,19 +73,14 @@ class NotificationWeeklyView(APIView):
         start_date = datetime.datetime.strftime((timezone.now() - datetime.timedelta(weeks=1)), '%Y-%m-%d')
         end_date = timezone.now()
         week = Notification.objects.filter(created_time__range=(start_date, end_date))
-
         if week.exists():
             return week, start_date
         else:
             return None, None
 
-    def get(self, request):
-        weekly_list, start_date = self.get_weeklylist()
-
-        if weekly_list is None:
-            return Response({"error": "이번주 알림 내역이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
-
+    def set_weekly_data(self, weekly_list, start_date):
         total_hit = total_kick = total_danger = total_warning = total_caution = 0
+        
         for day in weekly_list:
             total_hit += day.hit_count
             total_kick += day.kick_count
@@ -105,15 +100,23 @@ class NotificationWeeklyView(APIView):
             "total_caution": total_caution,
         }
 
-        # 폭력행위가 감지되지 않았을 경우 -> 기존의 데이터 전송
-        try:
-            weekly = NotificationWeekly.objects.get(start_date=start_date, total_hit=total_hit, total_kick=total_kick, total_danger=total_danger, total_warning=total_warning, total_caution=total_caution)
-            return Response(data, status=status.HTTP_200_OK)
+        return data
 
+    def get(self, request):
+        weekly_list, start_date = self.get_weeklylist()
+
+        if weekly_list is None:
+            return Response({"error": "이번주 알림 내역이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
+
+        data = self.set_weekly_data(weekly_list, start_date)
+        weekly = NotificationWeekly.objects.filter(start_date__date=data["start_date"], total_hit=data["total_hit"], total_kick=data["total_kick"], total_danger=data["total_danger"], total_warning=data["total_warning"], total_caution=data["total_caution"])
+        # 폭력행위가 감지되지 않았을 경우 -> 기존의 데이터 전송
         # 폭력행위가 감지된 경우 -> 새로 저장
-        except NotificationWeekly.DoesNotExist:
+        if weekly.exists():
+            print('ALREADY EXIST!')
+        else:
             serializer = NotificationWeeklySerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
-                return Response(data, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
           
