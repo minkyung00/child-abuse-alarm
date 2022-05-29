@@ -146,24 +146,25 @@ def findPairs(output,imgWidth,imgHeight,points): #output: network -imageld, PAF 
 
 #머리,손,발 검출 안되면 삭제
 def head_hand_foot(hit_or_kick,person_Keypoints):
-    no_match_flag = 0
+    no_person = []
     for n in range(len(person_Keypoints)):
-        n = n - no_match_flag
         if (person_Keypoints[n][0] == -1 ):
-            person_Keypoints = np.delete(person_Keypoints, n, axis=0)
-            no_match_flag += 1
+            no_person.append(n)
         elif (person_Keypoints[n][14]==-1):
-            person_Keypoints = np.delete(person_Keypoints, n, axis=0)
-            no_match_flag += 1
+            no_person.append(n)
         else:
             if (hit_or_kick == 1):
                 if (person_Keypoints[n][4] == -1) & (person_Keypoints[n][7] == -1):
-                    person_Keypoints = np.delete(person_Keypoints, n, axis=0)
-                    no_match_flag += 1
+                    no_person.append(n)
             if (hit_or_kick == 2):
                 if (person_Keypoints[n][10] == -1) & (person_Keypoints[n][13] == -1):
-                    person_Keypoints = np.delete(person_Keypoints, n, axis=0)
-                    no_match_flag += 1
+                    no_person.append(n)
+
+    no_person_flag = 0
+    for i in no_person:
+        i = i - no_person_flag
+        person_Keypoints=np.delete(person_Keypoints,i,axis=0)
+        no_person_flag += 1
     return person_Keypoints
 
 def head_moving(person_Keypoints,backbone,head,keypoints_list): # 전 frame의 backbone, head 좌표
@@ -215,7 +216,7 @@ def getPerson_Keypoints(pairs_valid,pairs_invalid,keypoints_list):
                     person_Keypoints = np.vstack([person_Keypoints, row])
     return person_Keypoints
 
-def main(i):
+def main(valid, frame):
     net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)#네트워크 읽어오기
 
     if device == "cpu":
@@ -227,7 +228,7 @@ def main(i):
         print("Using GPU device")
 
     # cap = cv2.VideoCapture('capstone_data/child_test6.mp4') #영상 불러오기
-
+    #
     # w = round(cap.get(3))
     # h = round(cap.get(4))
     # fps = cap.get(cv2.CAP_PROP_FPS)
@@ -236,17 +237,15 @@ def main(i):
     frame_cnt=0
     hit_or_kick=1#받아와야 함
     person_bf=0
-    dist_abuse=0 #이동거리 d / 척추 길이 backbone
-    idx=1
-    abuse_thres=0.8  #dist_abuse 기준
-
-    while True:
+    dist_abuse=0
+    # idx=1
+    for i in range(len(frame)):
+        image = frame[i]
         # 웹캠 프레임
         # ret, image = cap.read()
-        start=time.time()
-        image = url_to_image(settings.AWS_S3_CUSTOM_DOMAIN + '/' + str(i) + '.jpg')
+        # img = url_to_image('https://capstone1234.s3.ap-northeast-2.amazonaws.com/' + str(idx) + '.jpg')
         frame_cnt+=1
-        idx+=1
+        # idx+=1
         print("------------------------------")
         print("frame_cnt :",frame_cnt)
         # frame.shape = 불러온 이미지에서 height, width, color 받아옴
@@ -297,52 +296,84 @@ def main(i):
             #  [183.          25.           0.79937786]]
             points.append(keypoints_with_id)
 
-        #imageCopy = image.copy()
-       # for i in range(Npart):# 각 부위별로
-            #for j in range(len(points[i])):# 인원수만큼
-                #cv2.circle(imageCopy, points[i][j][0:2], 5, [0, 0, 255], -1, cv2.LINE_AA) #points: red
+        imageCopy = image.copy()
+        for i in range(Npart):# 각 부위별로
+            for j in range(len(points[i])):# 인원수만큼
+                cv2.circle(imageCopy, points[i][j][0:2], 5, [0, 0, 255], -1, cv2.LINE_AA) #points: red
 
 
         pairs_valid, pairs_invalid = findPairs(output,imgWidth,imgHeight,points)
+
+        #print(pairs_valid)
+
         person_Keypoints = getPerson_Keypoints(pairs_valid, pairs_invalid,keypoints_list)
 
         person=[]
         joints=4
         xy=2
 
+        person = len(person_Keypoints)
+        print("삭제되기 전: " ,person)
         if frame_cnt==1:#초기값 설정
-            dist_point= [[[0 for _ in range(xy)]for _ in range(joints)] for _ in range(30)]#임의값 30으로 설정
-            head=[[0 for _ in range(xy)]for _ in range(30)]
+            dist_point= [[[0 for _ in range(xy)]for _ in range(joints)] for _ in range(person+100)]
+            head=[[0 for _ in range(xy)]for _ in range(person+100)]
         person_Keypoints = head_hand_foot(hit_or_kick,person_Keypoints)
         person = len(person_Keypoints)
+        print('삭제된 후: ',person)
+
         backbone = []
         for i in range(Npart - 1):
+            #print("<%d> "% i)
             for n in range(person):
                 index = person_Keypoints[n][np.array(POSE_PAIRS[i])]
+                #print(index)
                 if -1 in index:
                     continue
                 B = np.int32(keypoints_list[index.astype(int), 0])
                 A = np.int32(keypoints_list[index.astype(int), 1])
-               # cv2.line(imageCopy, (B[0], A[0]), (B[1], A[1]), colors[i], 3, cv2.LINE_AA)
+                #print('A:', A)
+                #cv2.line(imageCopy, (B[0], A[0]), (B[1], A[1]), colors[i], 3, cv2.LINE_AA)
                 if (frame_cnt % 4 == 0)|(frame_cnt==1):
                     if i == 0:
                         backbone.append(dist(B[0], A[0], B[1], A[1])) # backbone 계산
-                        #head[n][0]=A[0]
-                        #head[n][1]=A[1]
-                        #print(backbone)
-                    elif (i==4) | (i==7) | (i==11) | (i==14):
+                        print(n)
+                        head[n][0]=A[0]
+                        head[n][1]=A[1]
+                    elif i==4:
                         d = dist(dist_point[n][0][0], dist_point[n][0][1], A[0], A[1])
                         dist_point[n][0][0]=A[0]
                         dist_point[n][0][1]=A[1] #관절 좌표 저장
                         dist_abuse=d/backbone[n]
                         #print("left_hand ", dist_abuse)
-                        if (dist_abuse> abuse_thres) & (frame_cnt > 1):
+                        if ( dist_abuse> 0.8) & (frame_cnt > 1):
                             abuse_flag = 1
+                    elif i==7:
+                        d = dist(dist_point[n][1][0], dist_point[n][1][1], A[0], A[1])
+                        dist_point[n][1][0]=A[0]
+                        dist_point[n][1][1]=A[1] #관절 좌표 저장
+                        dist_abuse=d/backbone[n]
+                        #print("right_hand ", dist_abuse)
+                        if ( dist_abuse> 0.8) & (frame_cnt > 1):
+                            abuse_flag = 1
+                    elif i==11:
+                        d = dist(dist_point[n][2][0], dist_point[n][2][1], A[0], A[1])
+                        dist_point[n][2][0]=A[0]
+                        dist_point[n][2][1]=A[1] #관절 좌표 저장
+                        dist_abuse = d / backbone[n]
+                        #print("left_foot ", dist_abuse)
+                        if ( dist_abuse > 0.8) & (frame_cnt > 1):
+                            abuse_flag = 1
+                    elif i==14:
+                        d = dist(dist_point[n][3][0], dist_point[n][3][1], A[0], A[1])
+                        dist_point[n][3][0]=A[0]
+                        dist_point[n][3][1]=A[1] #관절 좌표 저장
+                        dist_abuse = d / backbone[n]
+                        #print("right_foot ", dist_abuse)
+                        if ( dist_abuse>0.8)&(frame_cnt>1):
+                            abuse_flag=1
         print("abuse_flag: ", abuse_flag)
-        end=time.time()
-        print("time",end-start)
-        cv2.imshow('openpose',image)
-        if cv2.waitKey(1) == 27:
-            break
+        # cv2.imshow('openpose',imageCopy)
+        # if cv2.waitKey(1) == 27:
+        #     break
     return abuse_flag
-main(1)
+# main()
