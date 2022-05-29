@@ -12,18 +12,22 @@
       </b-col>
 
       <b-col cols="6">
-        <WeeklyDoghnutChart />
-        <b-card>
+        <WeeklyDoghnutChart
+          :weeklyData="weekly"
+        />
+        <!-- <b-card>
           <b-card-title>
             <img src="https://www.kakaocorp.com/page/ico_stock.png" width="36" height="36" alt="" class="ico_cate">  이번 달
           </b-card-title>
-        </b-card>
+        </b-card> -->
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
+import { getWeeklyNotification } from "@/api/notification"
+
 import DashBoardAlarmCard from "@/components/DashBoard/AlarmCard.vue"
 import WeeklyDoghnutChart from "@/components/DashBoard/WeeklyDoghnutChart.vue"
 
@@ -45,26 +49,15 @@ export default {
     return {
       // centerName: this.$store.state.center,
       centerName: '천호어린이집',
-      alarmList: [
-        {
-          id: 1,
-          title: "때리기 발생",
-          status: "danger",
-          created_time: "2022-03-20"
-        },
-        {
-          id: 2,
-          title: "밀치기 발생",
-          status: "warning",
-          created_time: "2022-03-21"
-        },
-      ],
-      result: ''
+      alarmList: [],
+      result: '',
+      weekly: ''
     }
   },
   created () {
     this.connect()
     this.getNotification()
+    this.getWeeklyNotification()
   },
   methods: {
     connect () {
@@ -84,11 +77,27 @@ export default {
         }
       };
     },
+    async getWeeklyNotification () {
+      try {
+        const res = await getWeeklyNotification()
+        this.weekly = res.data
+        this.setWeeklyPercent()
+      } catch (err) {
+        console.log(err)
+      }
+    },
     changeTimeFormat (now) {
       let date = now.slice(0, 10)
       let time = now.slice(11, 19)
       return `${date} ${time}`
     },
+    setWeeklyPercent () {
+      let total = this.weekly.total_danger + this.weekly.total_warning + this.weekly.total_caution
+
+      this.weekly.percentDanger = ((this.weekly.total_danger / total).toFixed(3)) * 100
+      this.weekly.percentWarning = ((this.weekly.total_warning / total).toFixed(3)) * 100
+      this.weekly.percentCaution = ((this.weekly.total_caution / total).toFixed(3)) * 100
+    }
   }
 }
 </script>

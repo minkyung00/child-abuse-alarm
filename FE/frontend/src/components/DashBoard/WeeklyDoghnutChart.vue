@@ -6,9 +6,10 @@
       </b-card-title>
       <b-card-text>
         <DoughnutChart
-          ref="weeklyChart"
+          ref="doghnutChart"
           :chartData="chart.data"
-          :options="chart.options"
+          :weeklyData="weeklyData"
+          :chartOptions="chart.options"
           id="chart-container"
         />
         <ul class="chart-description">
@@ -22,10 +23,13 @@
                   variant="danger"
                   class="badge-danger"
                 >{{ `위험` }}</b-badge>
-                <p class="percent">70%</p>
-                <!-- <p class="desc">* 5회 이상의 폭력행위</p> -->
+                <p class="percent">
+                  {{ `${this.weeklyData.percentDanger}%` }}
+                </p>
               </div>
-              <p class="total">총 7회</p>
+              <p class="total">
+                {{ `총 ${this.weeklyData.total_danger}회` }}
+              </p>
             </div>
           </li>
           
@@ -37,10 +41,14 @@
                   variant="danger"
                   class="badge-warning"
                 >{{ `경고` }}</b-badge>
-                <p class="percent">30%</p>
+                <p class="percent">
+                  {{ `${this.weeklyData.percentWarning}%` }}
+                </p>
                 
               </div>
-              <p class="total">총 3회</p>
+              <p class="total">
+                {{`총 ${this.weeklyData.total_warning}회`}}
+              </p>
             </div>
           </li>
 
@@ -52,11 +60,21 @@
                   variant="danger"
                   class="badge-caution"
                 >{{ `주의` }}</b-badge>
-                <p class="percent">30%</p>
+                <p class="percent">
+                  {{ `${this.weeklyData.percentCaution}%` }}
+                </p>
               </div>
-              <p class="total">총 3회</p>
+              <p class="total">
+                {{`총 ${this.weeklyData.total_caution}회`}}
+              </p>
             </div>
           </li>
+
+          <p class="legend-description">
+            * 위험: 5회 이상의 폭력행위,&nbsp;
+            경고: 2회 ~ 4회 폭력행위,&nbsp;
+            주의: 1회 폭력행위
+          </p>
         </ul>
       </b-card-text>
       <button
@@ -70,17 +88,20 @@
 <script>
 import DoughnutChart from "@/utils/doughnutChart.js"
 export default {
-  name: "WeeklyDoughnutChart",
+  name: "weeklyDataDoughnutChart",
   components: {
     DoughnutChart
+  },
+  props: {
+    weeklyData: Object
   },
   data () {
     return {
       chart: {
-        type: 'doughnut',
         data: {
           labels: ["위험", "경고", "주의"],
           datasets: [{
+            data: [],
             backgroundColor: [
               "#f96f7d",
               "#ffcc80",
@@ -88,7 +109,6 @@ export default {
             ],
             borderWidth: 2,
             hoverOffset: 4,
-            data: [6, 3, 1]
           }]
         },
         options: {
@@ -198,15 +218,14 @@ export default {
       }
     }
 
-    .desc {
-      font-size: 12px;
-      color: $color-grey-500;
-    }
-
     .total {
       flex-shrink: 0;
       font-size: calc(0.75rem + 0.7vw);
     }
+  }
+  .legend-description {
+    font-size: 12px;
+    color: $color-grey-500;
   }
 }
 
