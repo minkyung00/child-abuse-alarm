@@ -20,7 +20,7 @@
 
       <main>
         <b-card-text>
-          {{ `${alarm.date}` }}
+          {{ `${alarm.created_time}` }}
         </b-card-text>
         <button
           class="more-button"
@@ -59,8 +59,7 @@ export default {
       this.showModal = true
       this.selectedID = alarm.id
       this.notification = alarm
-      console.log(this.selectedID)
-    }
+    },
   }
 }
 </script>

@@ -50,13 +50,13 @@ export default {
           id: 1,
           title: "때리기 발생",
           status: "danger",
-          date: "2022-03-20"
+          created_time: "2022-03-20"
         },
         {
           id: 2,
           title: "밀치기 발생",
           status: "warning",
-          date: "2022-03-21"
+          created_time: "2022-03-21"
         },
       ],
       result: ''
@@ -77,12 +77,18 @@ export default {
         const alarms = JSON.parse(e.data).data;
 
         if (alarms) {
-          for (const alarm of alarms) {
+          for (let alarm of alarms) {
+            alarm.created_time = this.changeTimeFormat(alarm.created_time)
             this.alarmList.push(alarm);
           }
         }
       };
-    }
+    },
+    changeTimeFormat (now) {
+      let date = now.slice(0, 10)
+      let time = now.slice(11, 19)
+      return `${date} ${time}`
+    },
   }
 }
 </script>

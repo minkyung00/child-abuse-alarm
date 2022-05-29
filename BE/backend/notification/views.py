@@ -34,15 +34,14 @@ def save_notification(target_center, content):
   video_index = content.split(',')[0]
   act = content.split(',')[1]
 
-  hit_cnt = 0
-  kick_cnt = 0
+  hit_cnt = kick_cnt = 0
   if (act == 'hit'):
-    hit_cnt = content.split(',')[2]
+      hit_cnt = content.split(',')[2]
   elif (act == 'kick'):
-    kick_cnt = content.split(',')[2]
+      kick_cnt = content.split(',')[2]
   else:
-    hit_cnt = content.split(',')[2]
-    kick_cnt = content.split(',')[3]
+      hit_cnt = content.split(',')[2]
+      kick_cnt = content.split(',')[3]
 
   data['title'] = video_index + ',' + act
   data['content'] = settings.AWS_S3_CUSTOM_DOMAIN + '/' + key
@@ -52,11 +51,11 @@ def save_notification(target_center, content):
 
   total_count = int(hit_cnt) + int(kick_cnt)
   if (total_count >= 5):
-      data['is_danger'] = True
+      data['status'] = 'danger'
   elif (total_count >= 2):
-      data['is_warning'] = True
+      data['status'] = 'warning'
   elif (total_count > 0):
-      data['is_caution'] = True
+      data['status'] = 'caution'
 
   serializer = NotificationSerializer(data=data)
   if serializer.is_valid():
@@ -90,9 +89,12 @@ class NotificationWeeklyView(APIView):
         for day in weekly_list:
             total_hit += day.hit_count
             total_kick += day.kick_count
-            total_danger += int(day.is_danger)
-            total_warning += int(day.is_warning)
-            total_caution += int(day.is_caution)
+            if (day.status == 'danger'):
+                total_danger += 1
+            if (day.status == 'warning'):
+                total_warning += 1
+            if (day.status == 'caution'):
+                total_caution += 1
         
         data = {
             "start_date": start_date,

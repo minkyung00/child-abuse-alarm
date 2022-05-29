@@ -11,9 +11,7 @@ class Notification(models.Model):
     target_center = models.ForeignKey(Center, on_delete=models.CASCADE, db_column="target_center", null=True)
     target_user = models.ForeignKey(User, on_delete=models.CASCADE, db_column="username", to_field="username", null=True)
     created_time = models.DateTimeField(auto_now_add=True)
-    is_danger = models.BooleanField(default=False)
-    is_warning = models.BooleanField(default=False)
-    is_caution = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, null=True)
     is_alert = models.BooleanField(default=False)
     is_read = models.BooleanField(default=False)
 
