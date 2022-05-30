@@ -62,7 +62,7 @@ def make_video(key_list, video_index, hit_flag, kick_flag, hit_cnt, kick_cnt):
         if is_not_valid_url(key_list[i]):
             continue
         print("key_list[i]: ", str(key_list[i]))
-        s3.download_file(settings.AWS_STORAGE_BUCKET_NAME, str(i) + '.jpg', 'test/' + str(i) + '.jpg')
+        s3.download_file(settings.AWS_STORAGE_BUCKET_NAME, str(key_list[i]) + '.jpg', 'test/' + str(key_list[i]) + '.jpg')
 
     # 동영상 만들기
     os.system(f'ffmpeg -r 2 -pattern_type glob -i "test/*.jpg"'
