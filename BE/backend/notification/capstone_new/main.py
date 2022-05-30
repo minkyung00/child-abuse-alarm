@@ -66,15 +66,15 @@ def make_video(key_list, video_index, hit_flag, kick_flag, hit_cnt, kick_cnt):
     if hit_flag == 1 and kick_flag == 0:
         print('UPLOAD VIDEO')
         s3.upload_file('test/test.mp4', settings.AWS_STORAGE_BUCKET_NAME, 'video/천호어린이집,' + str(video_index) + ',hit,' + str(hit_cnt) + '.mp4')
-        print(save_notification('천호어린이집', str(video_index) + ',hit,' + str(hit_cnt)))
+        save_notification('천호어린이집', str(video_index) + ',hit,' + str(hit_cnt))
     elif hit_flag == 0 and kick_flag == 1:
         print('UPLOAD VIDEO')
         s3.upload_file('test/test.mp4', settings.AWS_STORAGE_BUCKET_NAME, 'video/천호어린이집,' + str(video_index) + ',kick,' + str(kick_cnt) + '.mp4')
-        print(save_notification('천호어린이집', str(video_index) + ',kick,' + str(kick_cnt)))
+        save_notification('천호어린이집', str(video_index) + ',kick,' + str(kick_cnt))
     elif hit_flag == 1 and kick_flag == 1:
         print('UPLOAD VIDEO')
         s3.upload_file('test/test.mp4', settings.AWS_STORAGE_BUCKET_NAME, 'video/천호어린이집,' + str(video_index) + ',hit,' + str(hit_cnt) + ',kick,' + str(kick_cnt) + '.mp4')
-        print(save_notification('천호어린이집', str(video_index) + ',hit kick,' + str(hit_cnt)+ ',' + str(kick_cnt)))
+        save_notification('천호어린이집', str(video_index) + ',hit kick,' + str(hit_cnt)+ ',' + str(kick_cnt))
 
     # test 폴더 삭제
     shutil.rmtree('test')
