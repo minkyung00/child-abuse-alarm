@@ -4,6 +4,7 @@ import time
 import math
 import matplotlib.pyplot as plt
 # from cvlib.object_detection import draw_bbox
+
 import urllib.request
 
 import os
@@ -14,6 +15,26 @@ def url_to_image(url):
     image = np.asarray(bytearray(resp.read()), dtype='uint8')
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     return image
+
+def crop_yolo(img, x,y,w,h,child_w,child_h, height, width):
+    # frame.shape = 불러온 이미지에서 height, width, color 받아옴
+    blank_w = 2*(child_w)
+    blank_h=2*(child_h)
+    ymin = y - blank_h
+    ymax = y + h + blank_h
+    xmin = x - blank_w
+    xmax = x + w + blank_w
+    if ymin < 0:
+        ymin = 0
+    if ymax > height:
+        ymax = height
+    if xmin < 0:
+        xmin = 0
+    if xmax > width:
+        xmax = width
+    crop = [xmin, ymin, xmax, ymax]
+    # crop = img[ymin:ymax, xmin:xmax]
+    return crop
 
 #안 되는 경우 물체 하나만 정해서 직접 학습
 #YOLO 네트워크 불러오기
@@ -80,7 +101,7 @@ def main(i):
         # ret, frame = VideoSignal.read()
         start = time.time()
         frame = url_to_image(settings.AWS_S3_CUSTOM_DOMAIN + '/' + str(i) + '.jpg')
-        h, w, c = frame.shape
+        height, width, c = frame.shape
         child = []
         hit = []
         kick=[]
@@ -88,7 +109,6 @@ def main(i):
         hit_flag = 0
         kick_flag=0
         valid = 1
-
 
         # YOLO 입력
         blob = cv2.dnn.blobFromImage(frame, 0.00392, (416, 416), (0, 0, 0),
@@ -125,33 +145,39 @@ def main(i):
                     class_ids.append(class_id)
 
         indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.45, 0.4)
+        child_w = 53
+        child_h = 118
         for i in range(len(boxes)):
             if i in indexes:
                 x, y, w, h = boxes[i]
                 label = str(classes[class_ids[i]])
                 if label == ('child'):
                     child = [x, y, w, h]
+                    child_w = w
+                    child_h = h
                     score_child = confidences[i]
                     child_flag = 1
-                    # print('child')
+                    print('child')
                 if label == ('hit'):
                     hit = [x, y, w, h]
                     score_hit = confidences[i]
                     hit_flag = 1
-                    # print('hit')
+                    frame_cropped_hit = crop_yolo(frame,x,y,w,h,child_w,child_h, height, width)
+                    print('hit')
                 if label == ('kick'):
                     kick = [x, y, w, h]
                     score_kick = confidences[i]
                     kick_flag = 1
-                    # print('kick')
+                    print('kick')
                 end = time.time()
                 t = end - start
                 # 경계상자와 클래스 정보 투영
                 #cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 5)
-                # cv2.putText(frame, label, (x, y - 20), cv2.FONT_ITALIC, 0.5, (255, 255, 255), 1)
+                cv2.putText(frame, label, (x, y - 20), cv2.FONT_ITALIC, 0.5, (255, 255, 255), 1)
+        # print(hit_flag, child_flag)
         if (hit_flag == 1 & child_flag == 1):
             valid = overlap(child, hit)
-            return valid # 1이면 hit검출 / 0이면 검출안된거고
+            return valid, frame_cropped_hit
             # try:
             #     cv2.rectangle(frame, (child[0], child[1]), (child[0] + child[2], child[1] + child[3]), (0, 255, 255), 5)  # 노란색
             #     cv2.rectangle(frame, (hit[0], hit[1]), (hit[0] + hit[2], hit[1] + hit[3]), (0, 255, 0), 5)  # 초록색
@@ -159,7 +185,7 @@ def main(i):
             #     ValueError
         elif (kick_flag == 1 & child_flag == 1):
             valid = overlap(child, kick)
-            return valid # 2이면 kick검출
+            return valid, []
             # try:
             #     cv2.rectangle(frame, (child[0], child[1]), (child[0] + child[2], child[1] + child[3]), (0, 255, 255), 5)  # 노란색
             #     cv2.rectangle(frame, (kick[0], kick[1]), (kick[0] + kick[2], kick[1] + kick[3]), (0, 0, 255), 5)#빨간색
@@ -167,7 +193,7 @@ def main(i):
             #     ValueError
         else:
             valid = 0
-            return valid
+            return valid, []
         #print(valid)
         # try:
         #     t_sum+=t
@@ -178,13 +204,9 @@ def main(i):
         #     #print(f"{t:.5f} sec")
         # except:
         #     NameError
-        cv2.imshow("YOLOv3", frame)
-        #out.write(frame)
-        # 1ms 마다 영상 갱신
-        if cv2.waitKey(1) > 0:
-            break
-
-
-    #out.release
-
-main(1)
+        # cv2.imshow("YOLOv3", frame)
+        # #out.write(frame)
+        # # 1ms 마다 영상 갱신
+        # if cv2.waitKey(1) > 0:
+        #     break`
+#out.release
