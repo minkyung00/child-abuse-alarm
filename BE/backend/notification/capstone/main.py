@@ -6,11 +6,16 @@ from urllib.error import HTTPError
 import cv2
 import numpy as np
 
-from . import yolo_tracking
+from . import yolo_child_abuse
 from . import openpose_multi_person_3
 
 from django.conf import settings
 from notification.views import save_notification
+
+# accessKey = 'AKIA2UJDATHMOCFHIMPA'
+# secretKey = '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'
+# region = 'ap-northeast-2'
+# bucket_name = 'capstone1234'
 
 s3 = boto3.client(
     's3',
@@ -18,6 +23,8 @@ s3 = boto3.client(
     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
     region_name=settings.AWS_REGION
     )
+# for i in range(1, 100):
+#     s3.upload_file('tmp_data/'+str(i)+'.jpg', bucket_name, str(i)+'.jpg')
 
 # # 없는 url이면 True 반환
 def is_not_valid_url(index):
@@ -54,10 +61,11 @@ def make_video(key_list, video_index, hit_flag, kick_flag, hit_cnt, kick_cnt):
     for i in range(len(key_list)):
         if is_not_valid_url(key_list[i]):
             continue
+        print("key_list[i]: ", str(key_list[i]))
         s3.download_file(settings.AWS_STORAGE_BUCKET_NAME, str(i) + '.jpg', 'test/' + str(i) + '.jpg')
 
     # 동영상 만들기
-    os.system(f'ffmpeg -r 5 -pattern_type glob -i "test/*.jpg"'
+    os.system(f'ffmpeg -r 2 -pattern_type glob -i "test/*.jpg"'
               f' -crf 20 test/test.mp4')
 
     # 동영상 s3에 업로드
@@ -79,6 +87,7 @@ def make_video(key_list, video_index, hit_flag, kick_flag, hit_cnt, kick_cnt):
 
 def upload_video():
     obj_list = s3.list_objects(Bucket = settings.AWS_STORAGE_BUCKET_NAME)
+    print(obj_list)
     contents_list = obj_list['Contents']
     if len(contents_list) != 0:
         key_list = [] # 검출된 프레임 담을 배열
@@ -88,10 +97,13 @@ def upload_video():
         tmp = 1
         while True:
             index += 1
+            print("index:", index)
             if is_not_valid_url(index):
+                print("in")
                 index -= 1
                 continue
-            flag, cropped = yolo_tracking.main(index)
+            flag, cropped = yolo_child_abuse.main(index)
+            print("flag: ", flag)
             # print(cropped)
             # cropped : [xmin, ymin, xmax, ymax]
             if flag != 0: # hit이나 kick이 검출되었으면
