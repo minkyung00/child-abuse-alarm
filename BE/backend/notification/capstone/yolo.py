@@ -110,7 +110,7 @@ def main(i):
                 confidence = scores[class_id]
 
                 # 검출 신뢰도
-                if confidence > 0.5:
+                if confidence > 0.3:
                     # Object detected
                     # 검출기의 경계상자 좌표는 0 ~ 1로 정규화되어있으므로 다시 전처리
                     center_x = int(detection[0] * w)
@@ -124,7 +124,7 @@ def main(i):
                     confidences.append(float(confidence))
                     class_ids.append(class_id)
 
-        indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.45, 0.4)
+        indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.3, 0.3)
         for i in range(len(boxes)):
             if i in indexes:
                 x, y, w, h = boxes[i]
