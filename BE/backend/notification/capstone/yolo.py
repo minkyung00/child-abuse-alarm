@@ -110,7 +110,7 @@ def main(i):
                 confidence = scores[class_id]
 
                 # 검출 신뢰도
-                if confidence > 0.3:
+                if confidence > 0.1:
                     # Object detected
                     # 검출기의 경계상자 좌표는 0 ~ 1로 정규화되어있으므로 다시 전처리
                     center_x = int(detection[0] * w)
