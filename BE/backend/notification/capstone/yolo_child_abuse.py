@@ -54,7 +54,6 @@ def main(i):
     weights_path = os.path.join(CUR_DIR, './weight/yolov4-tiny_best-width.weights')
     config_path =  os.path.join(CUR_DIR, './cfg/yolov4-tiny_width.cfg')
     net = cv2.dnn.readNet(weights_path, config_path)
-    
 
     t_sum=0
     t_cnt=0
@@ -93,6 +92,7 @@ def main(i):
         # ret, frame = cap.read()
         frame = url_to_image(settings.AWS_S3_CUSTOM_DOMAIN + '/' + str(i) + '.jpg')
         #frame = url_to_image('https://capstone1234.s3.ap-northeast-2.amazonaws.com/' + str(idx) + '.jpg')
+        frame=cv2.resize(frame,(960,720))
         start = time.time()
         height, width, c = frame.shape
         child = []
@@ -123,7 +123,7 @@ def main(i):
                 confidence = scores[class_id]
 
                 # 검출 신뢰도
-                if confidence > 0.4:
+                if confidence > 0.1:
                     # Object detected
                     # 검출기의 경계상자 좌표는 0 ~ 1로 정규화되어있으므로 다시 전처리
                     center_x = int(detection[0] * width)
@@ -137,7 +137,7 @@ def main(i):
                     confidences.append(float(confidence))
                     class_ids.append(class_id)
 
-        indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.3, 0.4)
+        indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.3, 0.3)
         #indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.1, 0.1)
         for i in range(len(boxes)):
             if i in indexes:

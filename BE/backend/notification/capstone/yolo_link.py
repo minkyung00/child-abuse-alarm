@@ -11,6 +11,7 @@ from cvlib.object_detection import draw_bbox
 import os
 from django.conf import settings
 
+
 #안 되는 경우 물체 하나만 정해서 직접 학습
 #YOLO 네트워크 불러오기
 
