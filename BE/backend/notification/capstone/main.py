@@ -79,7 +79,7 @@ def make_video(key_list, video_index, hit_flag, kick_flag, hit_cnt, kick_cnt):
     # test 폴더 삭제
     shutil.rmtree('test')
 
-if __name__ == '__main__':
+def upload_video ():
     obj_list = s3.list_objects(Bucket = settings.AWS_STORAGE_BUCKET_NAME)
     print(obj_list)
     contents_list = obj_list['Contents']
