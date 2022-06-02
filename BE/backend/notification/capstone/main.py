@@ -12,10 +12,6 @@ from . import openpose_multi_person_3
 from django.conf import settings
 from notification.views import save_notification
 
-# accessKey = 'AKIA2UJDATHMOCFHIMPA'
-# secretKey = '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'
-# region = 'ap-northeast-2'
-# bucket_name = 'capstone1234'
 
 s3 = boto3.client(
     's3',
@@ -55,6 +51,7 @@ def make_video(key_list, video_index, hit_flag, kick_flag, hit_cnt, kick_cnt):
     print('key_list:', key_list)
     # test 폴더 없으면 만들기
     if not os.path.isdir('test'):
+
         os.mkdir('test')
 
     # s3에서 img 받아오기
@@ -62,7 +59,7 @@ def make_video(key_list, video_index, hit_flag, kick_flag, hit_cnt, kick_cnt):
         if is_not_valid_url(key_list[i]):
             continue
         print("key_list[i]: ", str(key_list[i]))
-        s3.download_file(settings.AWS_STORAGE_BUCKET_NAME, str(key_list[i]) + '.jpg', 'test/' + str(key_list[i]) + '.jpg')
+        s3.download_file(bucket_name, str(key_list[i]) + '.jpg', 'test/' + str(key_list[i]) + '.jpg')
 
     # 동영상 만들기
     os.system(f'ffmpeg -r 2 -pattern_type glob -i "test/*.jpg"'
@@ -70,22 +67,19 @@ def make_video(key_list, video_index, hit_flag, kick_flag, hit_cnt, kick_cnt):
 
     # 동영상 s3에 업로드
     if hit_flag == 1 and kick_flag == 0:
-        print('UPLOAD VIDEO')
         s3.upload_file('test/test.mp4', settings.AWS_STORAGE_BUCKET_NAME, 'video/천호어린이집,' + str(video_index) + ',hit,' + str(hit_cnt) + '.mp4')
         save_notification('천호어린이집', str(video_index) + ',hit,' + str(hit_cnt))
     elif hit_flag == 0 and kick_flag == 1:
-        print('UPLOAD VIDEO')
         s3.upload_file('test/test.mp4', settings.AWS_STORAGE_BUCKET_NAME, 'video/천호어린이집,' + str(video_index) + ',kick,' + str(kick_cnt) + '.mp4')
         save_notification('천호어린이집', str(video_index) + ',kick,' + str(kick_cnt))
     elif hit_flag == 1 and kick_flag == 1:
-        print('UPLOAD VIDEO')
         s3.upload_file('test/test.mp4', settings.AWS_STORAGE_BUCKET_NAME, 'video/천호어린이집,' + str(video_index) + ',hit,' + str(hit_cnt) + ',kick,' + str(kick_cnt) + '.mp4')
         save_notification('천호어린이집', str(video_index) + ',hit kick,' + str(hit_cnt)+ ',' + str(kick_cnt))
 
     # test 폴더 삭제
     shutil.rmtree('test')
 
-def upload_video():
+if __name__ == '__main__':
     obj_list = s3.list_objects(Bucket = settings.AWS_STORAGE_BUCKET_NAME)
     print(obj_list)
     contents_list = obj_list['Contents']
@@ -97,13 +91,13 @@ def upload_video():
         tmp = 1
         while True:
             index += 1
-            print("index:", index)
+            print('-', end="")
             if is_not_valid_url(index):
-                print("in")
                 index -= 1
                 continue
+            print()
+            print("index:", index)
             flag, cropped = yolo_child_abuse.main(index)
-            print("flag: ", flag)
             # print(cropped)
             # cropped : [xmin, ymin, xmax, ymax]
             if flag != 0: # hit이나 kick이 검출되었으면
@@ -115,23 +109,27 @@ def upload_video():
                     if is_not_valid_url(i):
                         i -= 1
                         continue
-                    print('list:', i)
                     frame1 = url_to_image(settings.AWS_S3_CUSTOM_DOMAIN + '/' + str(i) + '.jpg')
                     cropped_image = crop_image(frame1, cropped)
                     frame_list.append(cropped_image)
                 openpose_flag = openpose_multi_person_3.main(flag, frame_list)
+                print('-------------------')
                 print('openpose_flag:', openpose_flag)
+                print('--------------------')
                 # openpose_flag: 0 -> 검출안된 거, 1 -> 검출된 거
                 # print('openpose_flag:', openpose_flag)
                 # cv2.imshow('img', crop_image(frame1, cropped))
                 # cv2.imwrite('img.jpg', crop_image(frame1, cropped))
-                if openpose_flag == 1:
+                if openpose_flag != 0:
                     if flag == 1:
                         hit_flag = 1
-                        hit_cnt += 1
+                        hit_cnt += openpose_flag
                     else:
                         kick_flag = 1
-                        kick_cnt += 1
+                        kick_cnt += openpose_flag
+                    print('-------------------')
+                    print('key_list 추가 :', index)
+                    print('--------------------')
                     key_list.append(index)
                     index += 5
             elif cnt_no_kick_hit == 10: # 마지막 검출된 후로부터 10프레임동안 검출되지 않았으면

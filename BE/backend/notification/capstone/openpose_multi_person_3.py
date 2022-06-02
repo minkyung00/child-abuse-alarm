@@ -245,7 +245,8 @@ def main(hit_or_kick, frame):
         # 웹캠 프레임
         # ret, img = cap.read()
         start=time.time()
-        # img = url_to_image('https://capstone1234.s3.ap-northeast-2.amazonaws.com/' + str(idx) + '.jpg')
+        
+        img=cv2.resize(img,(960,720))
         frame_cnt+=1
 
         if frame_cnt==1:#초기값 설정
@@ -340,7 +341,7 @@ def main(hit_or_kick, frame):
                         dist_abuse=d/(backbone[n]*5)
                         print("left_hand ", dist_abuse)
                         if (dist_abuse> abuse_thres) & (frame_cnt > 1):
-                            abuse_flag = 1
+                            abuse_flag += 1
                     elif (i==7):
                         d = dist(dist_point[n][0][0], dist_point[n][0][1], A[0], A[1])
                         dist_point[n][0][0]=A[0]
@@ -348,7 +349,7 @@ def main(hit_or_kick, frame):
                         dist_abuse = d / (backbone[n] * 5)
                         print("right_hand ", dist_abuse)
                         if (dist_abuse> abuse_thres) & (frame_cnt > 1):
-                            abuse_flag = 1
+                            abuse_flag += 1
                     elif (i==11):
                         d = dist(dist_point[n][0][0], dist_point[n][0][1], A[0], A[1])
                         dist_point[n][0][0]=A[0]
@@ -356,7 +357,7 @@ def main(hit_or_kick, frame):
                         dist_abuse=d/(backbone[n]*5)
                         print("left_foot ", dist_abuse)
                         if (dist_abuse> abuse_thres) & (frame_cnt > 1):
-                            abuse_flag = 1
+                            abuse_flag += 1
                     elif (i==14):
                         d = dist(dist_point[n][0][0], dist_point[n][0][1], A[0], A[1])
                         dist_point[n][0][0]=A[0]
@@ -364,11 +365,12 @@ def main(hit_or_kick, frame):
                         dist_abuse=d/(backbone[n])
                         print("right_foot ", dist_abuse)
                         if (dist_abuse> abuse_thres) & (frame_cnt > 1):
-                            abuse_flag = 1
+                            abuse_flag += 1
             print("abuse_flag: ", abuse_flag)
         #print("time",end-start)
             # cv2.imshow('openpose',img)
         if cv2.waitKey(1) == 27:
             break
+    # abuse_flag=int((abuse_flag+1)/2)
     return abuse_flag
 # main()
