@@ -74,7 +74,7 @@ def findPairs(output,imgWidth,imgHeight,points): #output: network -imageld, PAF 
 
     n_interp_samples = 10
     paf_score_th = 0.1
-    conf_th = 0.7
+    conf_th = 0.3
 
     for k in range(len(mapIdx)): #POSE_PAIRS 개수와 같음
 
@@ -238,7 +238,7 @@ def main(hit_or_kick, frame):
     dist_abuse=0 #이동거리 d / 척추 길이 backbone
     abuse_flag=0
     # idx=1
-    abuse_thres=0.32  #dist_abuse 기준
+    abuse_thres=0.08  #dist_abuse 기준
 
     for img_idx in range(len(frame)):
         img = frame[img_idx]
