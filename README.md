@@ -1,12 +1,24 @@
-# 🌱실시간 아동학대 알림 웹 사이트🌱
+# 실시간 아동학대 알림 웹 사이트: 도담도담 🍼
 
 어린이집 내 실시간 아동학대 알림 웹 사이트
 
-### 배포 링크: ~~http://3.39.165.135/~~
+### 배포 링크: ~~[도담도담 웹 사이트](http://3.39.165.135/)~~
 > 현재 서버 비용 문제로 배포가 중지되었습니다.
 
-## 프로젝트 소개
-어린이집에서 발생하는 아동학대에 대해 실시간으로 알림을 제공합니다.
+## 프로젝트 개요
+
+### 제안 배경
+- 아동학대 신고 접수 건수에 보육 교사, 학교 교사에 의한 아동학대 사례가 다수이다.
+- 어린이집 내 아동학대 사건 발생 후 고의적으로 CCTV를 망가뜨려 증거를 훼손할 수 있다.
+- 어린이집 CCTV는 복잡한 절차로 인해 열람이 불가능해 처벌이 어려워진다.
+
+### 프로젝트 목표
+- 도담도담은 어린아이가 탈 없이 잘 놀고 잘 자라나는 모양이라는 순우리말로, 효과적인 아동 학대 예방 및 양육자에 대한 신뢰도 향상으로 인한 건강한 보육 환경을 조성을 목적으로 합니다.
+
+### 수상
+- 🏆 2022년 한이음 ICT 멘토링 공모전 수상
+- 🏆 2022년 제 13회 세종대학교 창의설계경진대회 수상
+
 
 ## 프로젝트 기능
 ### 로그인 / 회원가입
@@ -20,10 +32,10 @@
 - 학대 행위를 단계별로 통계를 제공합니다.
 
 ## 기술 스택
+
 - **Front-End** <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=Vue.js&logoColor=white"> <img src="https://img.shields.io/badge/NGINX-009639?style=flat&logo=NGINX&logoColor=white">
 - **Back-End** <img src="https://img.shields.io/badge/Django-092E20?style=flat&logo=Django&logoColor=white"> <img src="https://img.shields.io/badge/Redis-DC382D?style=flat&logo=Redis&logoColor=white"> <img src="https://img.shields.io/badge/Celery-37814A?style=flat&logo=Celery&logoColor=white"> <img src="https://img.shields.io/badge/SQLite-003B57?style=flat&logo=SQLite&logoColor=white"><img src="https://img.shields.io/badge/Socket.io-010101?style=flat&logo=Socket.io&logoColor=white">
 - **Deploy** <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=Docker&logoColor=white"> <img src="https://img.shields.io/badge/EC2-010101?style=flat&logo=EC2&logoColor=white"> <img src="https://img.shields.io/badge/AmazonS3-569A31?style=flat&logo=AmazonS3&logoColor=white">
-
 
  ## 📁 프로젝트 구조
  
@@ -89,4 +101,4 @@ VUE_APP_API_URLT=YOUR SERVER API
 ## Demo
 - Figma
 - 기획서
-- 영상
+- [발표 영상](https://www.youtube.com/watch?v=cUjmKBDj_mQ&t=24s)
