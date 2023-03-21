@@ -19,9 +19,17 @@
 - 🏆 2022년 한이음 ICT 멘토링 공모전 수상
 - 🏆 2022년 제 13회 세종대학교 창의설계경진대회 수상
 
+## 사용자 다이어그램
+<img src="https://user-images.githubusercontent.com/80238096/226498859-d5066954-ae7f-4445-a014-d697feccbfd3.png" width="500px" />
+
+- 학부모 사용자가 회원가입 후 어린이집 코드를 등록하면 사용자 정보가 서버에 저장됩니다.
+- 젯슨 나노가 CCTV 영상을 실시간으로 동영상 서버에 전송합니다.
+- 업로드된 영상에 대해 폭력행위를 검출하는 딥러닝 모델을 실행합니다.
+- 폭력 행위가 검출되면 웹 어플리케이션에 해당 영상과 알람이 전송됩니다.
 
 ## 프로젝트 기능
 ### 로그인 / 회원가입
+- 이메일을 통해 회원가입할 수 있습니다.
 - 회원가입한 사용자만 해당 서비스를 사용할 수 있습니다.
 ### 어린이집 등록
 - 전국에 있는 모든 어린이집 정보를 공개된 [Open API](https://www.data.go.kr/data/15013108/standard.do)를 크롤링한 데이터를 통해 어린이집을 등록할 수 있습니다.
@@ -36,6 +44,7 @@
 - **Front-End** <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=Vue.js&logoColor=white"> <img src="https://img.shields.io/badge/NGINX-009639?style=flat&logo=NGINX&logoColor=white">
 - **Back-End** <img src="https://img.shields.io/badge/Django-092E20?style=flat&logo=Django&logoColor=white"> <img src="https://img.shields.io/badge/Redis-DC382D?style=flat&logo=Redis&logoColor=white"> <img src="https://img.shields.io/badge/Celery-37814A?style=flat&logo=Celery&logoColor=white"> <img src="https://img.shields.io/badge/SQLite-003B57?style=flat&logo=SQLite&logoColor=white"><img src="https://img.shields.io/badge/Socket.io-010101?style=flat&logo=Socket.io&logoColor=white">
 - **Deploy** <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=Docker&logoColor=white"> <img src="https://img.shields.io/badge/EC2-010101?style=flat&logo=EC2&logoColor=white"> <img src="https://img.shields.io/badge/AmazonS3-569A31?style=flat&logo=AmazonS3&logoColor=white">
+- **Model**: YOLO, Openpose
 
  ## 📁 프로젝트 구조
  
